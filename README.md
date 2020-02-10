@@ -1,0 +1,2 @@
+- web portfolio
+- docker-compose up to run

@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  backend:
+    # image: python:3.6
+    build: ./backend/src
+    volumes:
+      - ./backend/src/:/backend/src
+    ports:
+      - "8000:8000"
+    # working_dir: /backend/src
+    # command: sh entrypoint-backend.sh
+  frontend:
+    # image: node:13.8.0-alpine
+    # command: sh entrypoint-frontend.sh
+    # working_dir: /frontend/website-ui
+    build: ./frontend/website-ui
+    volumes:
+      - ./frontend/website-ui/:/frontend/website-ui
+    ports:
+      - "80:80"
+  # nginx:
+  #   # image: nginx:1.17.8-alpine
+  #   build: ./frontend/website-ui
+  #   ports:
+  #     - 3000:8000
+  #   volumes:
+  #     - ./frontend/website-ui/build:/var/www/website
+  #   depends_on:
+  #     - backend

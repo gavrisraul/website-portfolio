@@ -1,0 +1,260 @@
+.container {
+    width: 580px;
+    height: 100px;
+    background:#F7F2EF;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    margin-bottom: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-column-gap: 20px;
+}
+
+.containericons {
+    width: 260px;
+    height: 50px;
+    background:#F7F2EF;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    grid-column-gap: 10px;
+}
+
+.container .box {
+    background: #CCCCCC;
+    display: grid;
+    box-sizing: border-box;
+    border: 1px solid #354654;
+    transition: .5s;
+    opacity: .5;
+}
+
+.container .box:hover {
+    background: #800000;
+    transform: scale(1.1);
+    border: 2px solid #0A100D;
+    opacity: .8;
+}
+
+.container .box h1 {
+    margin: 0;
+    padding: 0;
+    justify-self: center;
+    align-self: center;
+    font-size: 22px;
+    transition: .5s;
+    color: #0A100D;
+}
+
+.container .box h1:hover {
+    font-size: 24px;
+    color: #CCCCCC;
+    cursor: pointer;
+}
+
+a {
+    color: #0A100D;
+    text-decoration: none;
+}
+
+a:visited:hover {
+    color: #CCCCCC;
+}
+
+a:visited {
+    color: #0A100D;
+}
+
+.hero {
+    width: 100px;
+    height: 150px;
+    background:#F7F2EF;
+    margin-top: 5%;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    transition: .5s;
+    background-size: cover;
+    opacity: 1;
+
+}
+
+.hero:hover {
+    opacity: .7;
+    cursor: pointer;
+}
+
+.hero-name {
+    color: #0A100D;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    padding: 0;
+    font-size: 55px;
+    font-weight: bolder;
+    opacity: .8;
+}
+
+.hero-profession {
+    color: #0A100D;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    padding: 0;
+    font-size: 25px;
+    opacity: .7;
+}
+
+.hero-resume {
+    color: #0A100D;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    padding: 0;
+    font-size: 35px;
+    opacity: .8;
+    display: inline-block;
+}
+
+.hero-resume:after {
+    content: '';
+    background-color: #354654;
+    left: 0;
+    bottom: 0;
+    height: 1.5px;
+    width: 0;
+    transition: width .3s ease;
+    transform: translate(-50%);
+    display: block;
+    z-index: -1;
+    margin-left: 50%;
+}
+
+.hero-resume:hover::after {
+    width: 100%;
+}
+
+.hero-resume:hover {
+    cursor: pointer;
+}
+
+.icon {
+    color: #0A100D;
+    display: grid;
+    box-sizing: border-box;
+    transition: .5s;
+    opacity: .5;
+}
+
+.icon:hover {
+    color: #354654;
+    transform: scale(1.2);
+    opacity: 1;
+    cursor: pointer;
+}
+
+hr {
+    opacity: .5;
+    width: 600px;
+    height: 0.01px;
+    color: #354654;
+    margin-top: 25px;
+    transition: .2s;
+}
+
+hr:hover{
+    opacity: 1;
+    transform: scale(1.01);
+    color: #000;
+}
+
+h5 {
+    margin-top: 5%;
+}
+
+@media screen and (max-width: 647px) {
+    .container {
+        width: 330px;
+        height: 200px;
+        grid-template-columns: repeat(3, 100px);
+        grid-column-gap: 20px;
+        grid-row-gap: 30px;
+    }
+    .containericons {
+        width: 260px;
+    }
+    hr {
+        width: 350px;
+    }
+    .container .box h1 {
+        font-size: 18px;
+    }
+    .container .box h1:hover {
+        font-size: 18px;
+    }
+    .container .box:hover {
+        background: #800000;
+        transform: scale(1);
+        border: 1px solid #0A100D;
+    }
+    .container .boxd {
+        grid-row: 1/3;
+        border: 0px;
+        background: #F7F2EF;
+        grid-column: 3;
+    }
+}
+
+@media screen and (max-width: 367px) {
+    .container {
+        width: 75px;
+        height: 250px;
+        grid-auto-flow: row;
+        grid-template-columns: repeat(1, 70px);
+        grid-row-gap: 10px;
+        margin-bottom: 25px;
+    }
+    .containericons {
+        width: 75px;
+        height: 50px;
+        grid-auto-flow: row;
+        grid-template-columns: repeat(1, 70px);
+        grid-column-gap: 20px;
+        grid-row-gap: 3px;
+        margin: 0;
+    }
+    hr {
+        width: 150px;
+    }
+    .container .box h1 {
+        font-size: 17px;
+    }
+    .container .box h1:hover {
+        font-size: 17px;
+    }
+    .container .box:hover {
+        background: #800000;
+        transform: scale(1);
+        border: 1px solid #0A100D;
+    }
+    .container .boxd {
+        display: none;
+    }
+    h5 {
+        margin-top: 0;
+        margin-left: 30px;
+    }
+    .hero-name {
+        font-size: 40px;
+    }
+}

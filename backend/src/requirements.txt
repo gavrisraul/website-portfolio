@@ -1,0 +1,11 @@
+docker-compose
+ipython
+pudb
+django
+django-cors-headers
+djangorestframework
+markdown
+django-filter
+virtualenvwrapper
+sendgrid
+gunicorn

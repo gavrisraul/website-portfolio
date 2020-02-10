@@ -1,0 +1,101 @@
+import React from 'react';
+import axios from 'axios';
+import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
+import '../ComponentsCSS/Contact.css';
+
+
+class Contact extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            name: '',
+            email: '',
+            message: '',
+            subject: '',
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange = e => {
+        this.setState({[e.target.name]: e.target.value});
+    }
+
+    async handleSubmit(e) {
+        e.preventDefault();
+        const {name, email, message, subject} = this.state;
+
+        const form = await axios.post('http://127.0.0.1:8000/api/send_email', {
+            name, email, message, subject
+        }).then((data) => {
+            console.log(data, form);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    componentDidMount() {
+        // const { match: { params } } = this.props;
+        axios.get('http://127.0.0.1:8000/api/send_email')
+            .then(res => {
+            this.setState({
+                    hero: res.data[0],
+                })
+            })
+    }
+
+    render() {
+        return (
+            <div>
+                <nav>
+                    <div className="nav_links">
+                        <div className="link_nav"><Link to="/">Home</Link></div>
+                        <div className="link_nav"><Link to="/about">About</Link></div>
+                        <div className="link_nav"><Link to="/blog">Blog</Link></div>
+                        <div className="link_nav"><Link to="/portfolio">Portfolio</Link></div>
+                    </div>
+                </nav>
+                <Form onSubmit={this.handleSubmit}>
+                    <h1>Contact me!</h1>
+                    <FormGroup className="formgroup">
+                        <Label for="name" className="label">Your Name</Label>
+                        <Input
+                            className="input"
+                            type="text"
+                            name="name"
+                            onChange={this.handleChange} />
+                    </FormGroup>
+                    <FormGroup className="formgroup">
+                        <Label for="subject" className="label">Subject</Label>
+                        <Input
+                            className="input"
+                            type="text"
+                            name="subject"
+                            onChange={this.handleChange} />
+                    </FormGroup>
+                    <FormGroup className="formgroup">
+                        <Label for="email" className="label">Email</Label>
+                        <Input
+                            className="input"
+                            type="email"
+                            name="email"
+                            onChange={this.handleChange} />
+                    </FormGroup>
+                    <FormGroup className="formgroup">
+                        <Label for="message" className="label">Message</Label>
+                        <Input
+                            className="input textarea"
+                            type="textarea"
+                            name="message"
+                            onChange={this.handleChange} />
+                    </FormGroup>
+                    <Button className="submit">Submit!</Button>
+                </Form>
+            </div>
+        );
+    };
+}
+
+export default Contact;

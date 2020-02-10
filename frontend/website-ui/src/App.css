@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #F7F2EF;
+  font-family: 'VT323', sans-serif;
+}
+
+.App {
+  text-align: center;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  border: 1px solid #354654;
+  box-shadow: inset 0 0 2.5px 2px #0A100D;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #354654;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0A100D;
+}
+
+.nav_links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.link_nav {
+  width: 100px;
+  margin-left: 1px;
+  font-size: 25px;
+  box-sizing: border-box;
+  border: 1px solid #0A100D;
+  padding: 5px;
+  background: #5c0000a6;
+  margin-top: 0;
+}

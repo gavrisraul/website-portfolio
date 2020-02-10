@@ -58,9 +58,9 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                <Link to="/about"><div style={{  
+                <div style={{  
                     backgroundImage: "url(" + this.state.hero.hero_image + ")",
-                }} className="hero"></div></Link>
+                }} className="hero"><Link to="/about"><div className="hero-link"></div></Link></div>
                 <div className="hero-name">{this.state.hero.surname} {this.state.hero.name}</div>
                 <div className="hero-profession">{this.state.hero.hero_profession}</div>
                 <div className="hero-resume"><a href={this.state.resume.url}>{this.state.hero.resume_label}</a></div>
@@ -74,11 +74,11 @@ class Home extends React.Component {
                 </div>
                 <hr />
                 <div className="containericons">
-                    <a href={this.state.github.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faGithub} /></a>
-                    <a href={this.state.linkedin.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faLinkedin} /></a> 
-                    <a href={this.state.facebook.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faFacebookSquare} /></a>
-                    <a href={this.state.instagram.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faInstagram} /></a>
-                    <a href={this.state.youtube.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faYoutube} /></a>
+                    <a className="container-icon" href={this.state.github.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faGithub} /></a>
+                    <a className="container-icon" href={this.state.linkedin.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faLinkedin} /></a> 
+                    <a className="container-icon" href={this.state.facebook.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faFacebookSquare} /></a>
+                    <a className="container-icon" href={this.state.instagram.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faInstagram} /></a>
+                    <a className="container-icon" href={this.state.youtube.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faYoutube} /></a>
                 </div>
                 <h5>{this.state.hero.trademarks}</h5>
             </div>

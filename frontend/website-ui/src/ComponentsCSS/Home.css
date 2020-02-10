@@ -71,11 +71,16 @@ a:visited {
     color: #0A100D;
 }
 
+.hero-link {
+    width: 100%;
+    height: 100%;
+}
+
 .hero {
-    width: 100px;
+    width: 200px;
     height: 150px;
     background:#F7F2EF;
-    margin-top: 5%;
+    margin-top: 3%;
     padding: 0;
     margin-left: auto;
     margin-right: auto;
@@ -83,7 +88,6 @@ a:visited {
     transition: .5s;
     background-size: cover;
     opacity: 1;
-
 }
 
 .hero:hover {
@@ -180,6 +184,11 @@ hr:hover{
 
 h5 {
     margin-top: 5%;
+}
+
+.container-icon {
+    width: 30px;
+    height: 30px;
 }
 
 @media screen and (max-width: 647px) {

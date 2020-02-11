@@ -20,7 +20,10 @@ class Destroy extends React.Component {
 
     render() {
         return (
-            <div>Destroy</div>
+            <div>
+                Destroy
+                <h5>Raul Gavriș © 2020</h5>
+            </div>
         );
     };
 }

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+import NavigationBar from './NavigationBar';
+
 import '../ComponentsCSS/Contact.css';
 
 
@@ -49,14 +51,7 @@ class Contact extends React.Component {
     render() {
         return (
             <div>
-                <nav>
-                    <div className="nav_links">
-                        <div className="link_nav"><Link to="/">Home</Link></div>
-                        <div className="link_nav"><Link to="/about">About</Link></div>
-                        <div className="link_nav"><Link to="/blog">Blog</Link></div>
-                        <div className="link_nav"><Link to="/portfolio">Portfolio</Link></div>
-                    </div>
-                </nav>
+                <NavigationBar></NavigationBar>
                 <Form onSubmit={this.handleSubmit}>
                     <h1>Contact me!</h1>
                     <FormGroup className="formgroup">
@@ -93,6 +88,7 @@ class Contact extends React.Component {
                     </FormGroup>
                     <Button className="submit">Submit!</Button>
                 </Form>
+                <h5>Raul Gavriș © 2020</h5>
             </div>
         );
     };

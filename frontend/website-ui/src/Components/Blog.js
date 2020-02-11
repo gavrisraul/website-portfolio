@@ -1,6 +1,8 @@
 import React from 'react';
 // import axios from 'axios';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+
+import NavigationBar from './NavigationBar';
 
 
 class Blog extends React.Component {
@@ -21,14 +23,8 @@ class Blog extends React.Component {
     render() {
         return (
             <div>
-                <nav>
-                    <div className="nav_links">
-                        <div className="link_nav"><Link to="/">Home</Link></div>
-                        <div className="link_nav"><Link to="/about">About</Link></div>
-                        <div className="link_nav"><Link to="/portfolio">Potrfolio</Link></div>
-                        <div className="link_nav"><Link to="/contact">Contact</Link></div>
-                    </div>
-                </nav>
+                <NavigationBar></NavigationBar>
+                <h5>Raul Gavriș © 2020</h5>
             </div>
         );
     };

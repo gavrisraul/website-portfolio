@@ -2,6 +2,9 @@ import React from 'react';
 // import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import NavigationBar from './NavigationBar';
+import '../ComponentsCSS/Portfolio.css';
+
 
 class Portfolio extends React.Component {
     state = {
@@ -21,14 +24,20 @@ class Portfolio extends React.Component {
     render() {
         return (
             <div>
-                <nav>
-                    <div className="nav_links">
-                        <div className="link_nav"><Link to="/">Home</Link></div>
-                        <div className="link_nav"><Link to="/about">About</Link></div>
-                        <div className="link_nav"><Link to="/blog">Blog</Link></div>
-                        <div className="link_nav"><Link to="/contact">Contact</Link></div>
-                    </div>
-                </nav>
+                <NavigationBar></NavigationBar>
+                <div className="content">
+                    <div className="porfolio-item-one">one</div>
+                    <div className="porfolio-item-two">two</div>
+                    <div className="porfolio-item-three">three</div>
+                    <div className="porfolio-item-four">four</div>
+                    <div className="porfolio-item-five">five</div>
+                    <div className="porfolio-item-six">six</div>
+                    <div className="porfolio-item-seven">seven</div>
+                    <div className="porfolio-item-eight">eight</div>
+                    <div className="porfolio-item-nine">nine</div>
+                    <div className="porfolio-item-ten">ten</div>
+                </div>
+                <h5>Raul Gavriș © 2020</h5>
             </div>
         );
     };

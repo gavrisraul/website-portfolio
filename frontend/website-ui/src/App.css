@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap');
 
 body {
   margin: 0;
   padding: 0;
   background: #F7F2EF;
-  font-family: 'VT323', sans-serif;
+  font-family: 'Ubuntu Mono', monospace;
 }
 
 .App {
@@ -29,20 +29,55 @@ body {
   background: #0A100D;
 }
 
-.nav_links {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+.nav-bar {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-auto-columns: minmax(120px, 120px);
+  grid-gap: 10px;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3%;
+
 }
 
-.link_nav {
-  width: 100px;
-  margin-left: 1px;
-  font-size: 25px;
-  box-sizing: border-box;
+.link-nav {
+  font-size: 20px;
+  width: 100%;
+  border: 1px solid #354654;
+  background: #CCCCCC;
+  height: 30px;
+  transition: .5s;
+  opacity: .7;
+}
+
+.link-nav:hover {
+  background: #800000;
+  transform: scale(1.05);
   border: 1px solid #0A100D;
-  padding: 5px;
-  background: #5c0000a6;
-  margin-top: 0;
+  opacity: .9;
+}
+
+.active {
+  background: #800000;
+}
+
+.inactive {
+  background: #CCCCCC;
+}
+
+h5 {
+  margin-top: 5%;
+}
+
+@media screen and (max-width: 647px) {
+  .nav-bar {
+    max-width: 80%;
+  }
+}
+
+@media screen and (max-width: 367px) {
+  .nav-bar{
+    max-width: 95%;
+  }
 }

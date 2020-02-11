@@ -47,13 +47,13 @@
     padding: 0;
     justify-self: center;
     align-self: center;
-    font-size: 22px;
+    font-size: 18px;
     transition: .5s;
     color: #0A100D;
 }
 
 .container .box h1:hover {
-    font-size: 24px;
+    font-size: 20px;
     color: #CCCCCC;
     cursor: pointer;
 }
@@ -102,7 +102,7 @@ a:visited {
     margin-right: auto;
     margin-bottom: 0;
     padding: 0;
-    font-size: 55px;
+    font-size: 45px;
     font-weight: bolder;
     opacity: .8;
 }
@@ -179,11 +179,7 @@ hr {
 hr:hover{
     opacity: 1;
     transform: scale(1.01);
-    color: #000;
-}
-
-h5 {
-    margin-top: 5%;
+    color: #0A100D;
 }
 
 .container-icon {
@@ -206,10 +202,10 @@ h5 {
         width: 350px;
     }
     .container .box h1 {
-        font-size: 18px;
+        font-size: 16px;
     }
     .container .box h1:hover {
-        font-size: 18px;
+        font-size: 16px;
     }
     .container .box:hover {
         background: #800000;
@@ -246,10 +242,10 @@ h5 {
         width: 150px;
     }
     .container .box h1 {
-        font-size: 17px;
+        font-size: 14px;
     }
     .container .box h1:hover {
-        font-size: 17px;
+        font-size: 14px;
     }
     .container .box:hover {
         background: #800000;
@@ -265,5 +261,8 @@ h5 {
     }
     .hero-name {
         font-size: 40px;
+    }
+    .hero {
+        width: 140px;
     }
 }

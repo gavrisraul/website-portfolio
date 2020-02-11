@@ -10,7 +10,7 @@ Form {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 30px;
+  font-size: 25px;
   margin-bottom: 20px;
 }
 
@@ -21,7 +21,7 @@ Form {
   width: 100%;
   justify-content: center;
   /* text-decoration: underline; */
-  margin-bottom: 1%;
+  margin-bottom: 3%;
 }
 
 .input {
@@ -32,7 +32,7 @@ Form {
   outline: none;
   border-bottom: 2px solid #0A100D;
   resize: none;
-  font-size: 30px;
+  font-size: 20px;
   font-family: 'VT323', sans-serif;
   color: #354654;
 }
@@ -47,22 +47,35 @@ Form {
   width: 150px;
   background: #CCCCCC;
   border: 2px solid #0A100D;
-  transition: .1s;
-  opacity: .7;
-  font-size: 25px;
-  font-family: 'VT323', sans-serif;
+  transition: .3s;
+  opacity: .6;
+  font-size: 20px;
+  font-family: 'Ubuntu Mono', monospace;
 }
 
 .submit:hover {
   background: #800000;
   transform: scale(1.1);
   border: 1.5px solid #0A100D;
-  opacity: 1;
+  opacity: 0.8;
   cursor: pointer;
   color: #CCCCCC;
 }
 
 h1 {
   margin-bottom: 15%;
-  font-size: 60px;
+  font-size: 55px;
+}
+
+@media screen and (max-width: 430px) {
+  Form {
+    width: 300px;
+  }
+  .formgroup {
+    width: 300px;
+  }
+  h1 {
+    margin-bottom: 15%;
+    font-size: 45px;
+  }
 }

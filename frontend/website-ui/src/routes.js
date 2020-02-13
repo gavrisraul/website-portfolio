@@ -7,6 +7,7 @@ import Blog from './Components/Blog';
 import Portfolio from './Components/Portfolio';
 import Contact from './Components/Contact';
 import Destroy from './Components/Destroy';
+import BlogArticle from './Components/BlogArticle';
 
 
 const BaseRouter = () => (
@@ -18,6 +19,7 @@ const BaseRouter = () => (
             <Route exact path='/portfolio' component={Portfolio} />
             <Route exact path='/contact' component={Contact} />
             <Route exact path='/destroy' component={Destroy} />
+            <Route exact path='/article/:id' component={BlogArticle} />
             <Route path='/' render={() => <div>404 not found</div>} />
         </Switch>
     </div>

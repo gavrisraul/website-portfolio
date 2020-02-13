@@ -60,13 +60,14 @@ body {
 
 .active {
   background: #800000;
+  opacity: .9;
 }
 
 .inactive {
   background: #CCCCCC;
 }
 
-h5 {
+.trademarks {
   margin-top: 5%;
 }
 

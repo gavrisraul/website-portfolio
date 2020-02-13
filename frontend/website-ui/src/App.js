@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <Router>
           <BaseRouter />
-      </Router>   
+      </Router>
     </div>
   );
 }

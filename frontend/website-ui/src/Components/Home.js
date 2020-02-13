@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import LoadingScreen from 'react-loading-screen';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons"
@@ -27,16 +28,20 @@ class Home extends React.Component {
         facebook: {},
         instagram: {},
         resume: {},
+        loaded: false,
     }
 
     componentDidMount() {
         // const { match: { params } } = this.props;
         axios.get('http://127.0.0.1:8000/api/hero/')
-            .then(res => {
-                this.setState({
-                    hero: res.data[0],
-                })
+        .then(res => {
+            this.setState({
+                hero: res.data[0],
             })
+        })
+        .then(setTimeout(() => {
+            this.setState({loaded: true})
+        }, 500))
         axios.get('http://127.0.0.1:8000/api/links/')
             .then(res => {
                 this.setState({
@@ -58,7 +63,16 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-                <div style={{  
+                <LoadingScreen
+                    loading={!this.state.loaded}
+                    bgColor='#F7F2EF'
+                    spinnerColor='#354654'
+                    textColor='#0A100D'
+                    logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
+                    text='Loading...'
+                />
+
+                <div style={{
                     backgroundImage: "url(" + this.state.hero.hero_image + ")",
                 }} className="hero"><Link to="/about"><div className="hero-link"></div></Link></div>
                 <div className="hero-name">{this.state.hero.surname} {this.state.hero.name}</div>
@@ -75,12 +89,12 @@ class Home extends React.Component {
                 <hr />
                 <div className="containericons">
                     <a className="container-icon" href={this.state.github.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faGithub} /></a>
-                    <a className="container-icon" href={this.state.linkedin.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faLinkedin} /></a> 
+                    <a className="container-icon" href={this.state.linkedin.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faLinkedin} /></a>
                     <a className="container-icon" href={this.state.facebook.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faFacebookSquare} /></a>
                     <a className="container-icon" href={this.state.instagram.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faInstagram} /></a>
                     <a className="container-icon" href={this.state.youtube.url}><FontAwesomeIcon className="icon" size="2x" color="#fff" icon={faYoutube} /></a>
                 </div>
-                <h5>{this.state.hero.trademarks}</h5>
+                <h5 className="trademarks">{this.state.hero.trademarks}</h5>
             </div>
         );
     };

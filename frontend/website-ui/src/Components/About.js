@@ -1,25 +1,49 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import renderHTML from 'react-render-html';
+import LoadingScreen from 'react-loading-screen';
 
 import NavigationBar from './NavigationBar';
+
+import '../ComponentsCSS/About.css';
 
 
 class About extends React.Component {
     state = {
+        hero: {},
+        loaded: false,
+    }
 
+    componentDidMount() {
+        // const { match: { params } } = this.props;
+        axios.get('http://127.0.0.1:8000/api/hero/')
+        .then(res => {
+            this.setState({
+                hero: res.data[0],
+            })
+        })
+        .then(setTimeout(() => {
+            this.setState({loaded: true})
+        }, 500))
     }
 
     render() {
         return (
             <div>
-                <NavigationBar></NavigationBar>
-                <img height="400px" alt="hero" src="https://raw.githubusercontent.com/gavrisraul/dotfiles/master/.wallpapers/raul.png" />
-                <h2>Hello, my name is Raul Gavriș. I'm a software developer.</h2>
-                <h2>I have studied computer science for the last 5 years, and I can say that it is my passion.</h2>
-                <h2>I am currently working at <a href="https://devnest.ro">Devnest</a> as a perl developer.</h2>
-                <h2>Previously worked at <a href="https://spyhce.com/">Spyhce</a> as a python developer.</h2>
-                <Link to="/contact"><h2>Contact me if you want something done in code!</h2></Link>
-                <h5>Raul Gavriș © 2020</h5>
+                <LoadingScreen
+                    loading={!this.state.loaded}
+                    bgColor='#F7F2EF'
+                    spinnerColor='#354654'
+                    textColor='#0A100D'
+                    logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
+                    text='Loading...'
+                />
+                <NavigationBar />
+                <div style={{
+                    backgroundImage: "url(" + this.state.hero.hero_image + ")",
+                }} className="hero-img"></div>
+                <div className="hero-description">{ renderHTML(String(this.state.hero.hero_description)) }</div>
+                <h5 className="trademarks">{this.state.hero.trademarks}</h5>
             </div>
         );
     };

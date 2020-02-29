@@ -62,7 +62,7 @@ Form {
   color: #CCCCCC;
 }
 
-h1 {
+.contact-title {
   margin-bottom: 15%;
   font-size: 55px;
 }
@@ -74,7 +74,7 @@ h1 {
   .formgroup {
     width: 300px;
   }
-  h1 {
+  .contact-title  {
     margin-bottom: 15%;
     font-size: 45px;
   }

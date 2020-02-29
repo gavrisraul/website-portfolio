@@ -14,11 +14,11 @@ class NavigationBar extends React.Component {
     render() {
         return (
             <nav className="nav-bar">
-                <div className="link-nav inactive"> <Link to="/">Home</Link> </div>
-                <div className={ this.state.aboutActive ? "link-nav active" : "link-nav inactive" } ><Link to="/about">About</Link ></div>
-                <div className={ this.state.blogActive ? "link-nav active" : "link-nav inactive" } ><Link to="/blog">Blog</Link> </div>
-                <div className={ this.state.portfolioActive ? "link-nav active" : "link-nav inactive" } ><Link to="/portfolio">Portfolio</Link> </div>
-                <div className={ this.state.contactActive ? "link-nav active" : "link-nav inactive" } ><Link to="/contact">Contact</Link> </div>
+                <Link to="/"><div className="link-nav inactive">Home</div></Link>
+                <Link to="/about"><div className={ this.state.aboutActive ? "link-nav active" : "link-nav inactive" }>About</div></Link>
+                <Link to="/blog"><div className={ this.state.blogActive ? "link-nav active" : "link-nav inactive" }>Blog</div></Link>
+                <Link to="/portfolio"><div className={ this.state.portfolioActive ? "link-nav active" : "link-nav inactive" }>Portfolio</div></Link>
+                <Link to="/contact"><div className={ this.state.contactActive ? "link-nav active" : "link-nav inactive" } >Contact</div></Link>
             </nav>
         );
     };

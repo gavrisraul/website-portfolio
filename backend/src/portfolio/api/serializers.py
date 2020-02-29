@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from portfolio.models import Hero, Links, Email, Article
+from portfolio.models import Hero, Links, Email, Post
 
 
 class HeroSerializerList(serializers.ModelSerializer):
@@ -25,13 +25,13 @@ class EmailSerializerList(serializers.ModelSerializer):
         )
 
 
-class ArticleSerializerList(serializers.ModelSerializer):
+class PostSerializerList(serializers.ModelSerializer):
     class Meta:
-        model = Article
-        fields = ('id', 'title', 'image')
+        model = Post
+        fields = ('id', 'title', 'image', 'date')
 
 
-class ArticleSerializerRetrieve(serializers.ModelSerializer):
+class PostSerializerRetrieve(serializers.ModelSerializer):
     class Meta:
-        model = Article
+        model = Post
         fields = ('id', 'title', 'image', 'text')

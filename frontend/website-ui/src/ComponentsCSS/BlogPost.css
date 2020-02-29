@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Code&display=swap');
+
+.blog-post {
+    padding-left: 15%;
+    padding-right: 15%;
+    font-size: 20px;
+    font-family: 'Fira Code';
+}
+
+code {
+    font-family: 'Fira Code';
+}
+
+@media screen and (max-width: 367px) {
+    .blog-post {
+        padding-left: 1%;
+        padding-right: 1%;
+    }
+  }

@@ -77,21 +77,26 @@ WSGI_APPLICATION = 'website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'OPTIONS': {
-#             'read_default_file': '/etc/mysql/my.cnf',
-#         },
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'website', # name of the database
+        'USER': 'root', # user to log into
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD'), # password for user
+        'HOST': 'localhost', # host for the server
+        'PORT': '3225', # port
+        'OPTIONS': {
+            'read_default_file': '/etc/my.cnf', # cnf file for mysql, could be in /etc/mysql/my.cnf
+        },
+    }
+}
 
 # LANGUAGE_CODE = 'en-us'
 

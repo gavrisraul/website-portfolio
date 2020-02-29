@@ -7,5 +7,5 @@ djangorestframework
 markdown
 django-filter
 virtualenvwrapper
-sendgrid
 gunicorn
+mysqlclient

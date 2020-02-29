@@ -1,8 +1,8 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from portfolio.models import Hero, Links, Email, Article
+from portfolio.models import Hero, Links, Email, Post
 from portfolio.api.serializers import (
-    HeroSerializerList, LinksSerializerList, ArticleSerializerList,
-    ArticleSerializerRetrieve, EmailSerializerList)
+    HeroSerializerList, LinksSerializerList, PostSerializerList,
+    PostSerializerRetrieve, EmailSerializerList)
 from rest_framework.response import Response
 
 from django.core.serializers import serialize
@@ -12,8 +12,6 @@ import os
 import pytz
 import json
 import requests
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 
 
 class HeroListView(ListAPIView):
@@ -21,14 +19,14 @@ class HeroListView(ListAPIView):
     serializer_class = HeroSerializerList
 
 
-class ArticleListView(ListAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializerList
+class PostListView(ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializerList
 
 
-class ArticleRetrieveView(RetrieveAPIView):
-    queryset = Article.objects.all()
-    serializer_class = ArticleSerializerRetrieve
+class PostRetrieveView(RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializerRetrieve
 
 
 class LinksListView(ListAPIView):
@@ -62,20 +60,21 @@ class EmailListView(ListAPIView):
                 self.email.save()
             except Exception:
                 self.email.update(active=True)
-        from_name = f'From Name: {str(request.data["name"])}<br />'
+        from_name = f'From Name: {str(request.data["name"])}'
         msg = str(request.data["message"])
         msg = "\n".join([from_name, msg])
-        message = Mail(
-            from_email=str(request.data['email']),
-            to_emails=str('rg.raulgavris@gmail.com'),
-            subject=str(request.data['subject']),
-            html_content=msg
-        )
+        import smtplib
+
         try:
-            # sg = SendGridAPIClient(os.environ.get('api_key'))
-            sg = SendGridAPIClient('')
-            response = sg.send(message)
-        except Exception as e:
-            print(e)
+            server = smtplib.SMTP('smtp.gmail.com:587')
+            server.ehlo()
+            server.starttls()
+            server.login('rg.raulgavris@gmail.com', os.environ.get('EMAIL_PASSWORD'))
+            message = 'Subject: {}\n\n{}'.format(str(request.data['subject']), request.data['email'] + "\n" + msg)
+            server.sendmail('rg.raulgavris@gmail.com', 'rg.raulgavris@gmail.com', message)
+            server.quit()
+            print("Success: Email sent!")
+        except:
+            print("Email failed to send.")
 
         return Response()

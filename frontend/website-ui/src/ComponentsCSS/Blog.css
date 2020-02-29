@@ -1,4 +1,4 @@
-.box-articles {
+.box-posts {
     margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
@@ -6,7 +6,7 @@
     width: 400px;
 }
 
-.box-articles .article {
+.box-posts .post {
     width: 100%;
     height: 75px;
     background: #CCCCCC;
@@ -19,7 +19,7 @@
     transition: 0.3s;
 }
 
-.box-articles .article:hover {
+.box-posts .post:hover {
     transform: scale(1.1);
     z-index: 100;
     background: #354654;
@@ -32,7 +32,7 @@
     border-bottom-left-radius: 20px;
 }
 
-.box-articles .article-id {
+.box-posts .post-id {
     width: 20px;
     height: 20px;
     text-align: center;
@@ -49,13 +49,21 @@
     margin-top: 7%;
 }
 
-.box-articles .article:hover .article-id {
+.date-posted {
+    position: absolute;
+    transform: translate(350%, 100%);
+}
+
+.box-posts .post:hover .post-id {
     background: #F7F2EF;
     color: #354654;
 }
 
 @media screen and (max-width: 430px) {
-    .box-articles {
+    .box-posts {
         width: 200px;
+    }
+    .date-posted {
+        transform: translate(130%, 100%);
     }
 }

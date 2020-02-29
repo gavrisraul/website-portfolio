@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import renderHTML from 'react-render-html';
 import LoadingScreen from 'react-loading-screen';
+import convert from 'htmr';
 
 import NavigationBar from './NavigationBar';
 
@@ -37,12 +37,13 @@ class About extends React.Component {
                     textColor='#0A100D'
                     logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
                     text='Loading...'
+                    children=''
                 />
                 <NavigationBar />
                 <div style={{
                     backgroundImage: "url(" + this.state.hero.hero_image + ")",
                 }} className="hero-img"></div>
-                <div className="hero-description">{ renderHTML(String(this.state.hero.hero_description)) }</div>
+                <div className="hero-description">{ convert(String(this.state.hero.hero_description)) }</div>
                 <h5 className="trademarks">{this.state.hero.trademarks}</h5>
             </div>
         );

@@ -32,6 +32,7 @@ class Destroy extends React.Component {
                     textColor='#0A100D'
                     logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
                     text='Loading...'
+                    children=''
                 />
                 Destroy
                 <h5 className="trademarks">{this.state.hero.trademarks}</h5>

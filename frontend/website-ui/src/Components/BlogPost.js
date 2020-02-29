@@ -3,24 +3,28 @@ import axios from 'axios';
 import LoadingScreen from 'react-loading-screen';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import PropTypes from 'prop-types';
+import ReactMarkdown from 'react-markdown';
+import CodeBlock from './CodeBlock';
+// import Post1 from '../ComponentsMD/Post1.md'; // for development purposese
+
+import '../ComponentsCSS/BlogPost.css';
 
 
-class BlogArticle extends React.Component {
+class BlogPost extends React.PureComponent {
     constructor() {
         super();
         this.state = {
+            markdown: '',
             hero: {},
-            article: {},
+            post: {},
             loaded: false,
         };
-        this.exampleCode = `#include <iostream>
-using namespace std;
-int main() {
-    cout << "First Blog Post!";
-}`;
     }
+
+    // componentWillMount() {
+    //     fetch(Post1).then(res => res.text()).then(text => this.setState({ markdown: text }));
+    // }
 
     componentDidMount() {
         const { match: { params } } = this.props;
@@ -30,51 +34,47 @@ int main() {
                     hero: res.data[0],
                 })
             })
+        axios.get(`http://127.0.0.1:8000/api/post/${params.id}/`)
+            .then(res => {
+                this.setState({
+                    post: res.data,
+                })
+            })
             .then(setTimeout(() => {
                 this.setState({loaded: true})
             }, 500))
-        axios.get(`http://127.0.0.1:8000/api/article/${params.id}/`)
-            .then(res => {
-                this.setState({
-                    article: res.data,
-                })
-            })
     }
 
-    firstArticle
-
-    render() {
-        return (
-            <div>
-                <LoadingScreen
-                    loading={!this.state.loaded}
-                    bgColor='#F7F2EF'
-                    spinnerColor='#354654'
-                    textColor='#0A100D'
-                    logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
-                    text='Loading...'
-                />
-                <Title>{this.state.article.title}</Title>
-                <Text>{renderHTML(String(this.state.article.text))}</Text>
-                <Center>
-                    <SyntaxHighlighter language="cpp" style={darcula} showLineNumbers={true}>
-                        {this.exampleCode}
-                    </SyntaxHighlighter>
-                </Center>
-                <Link to='/blog'><Back>Go to articles</Back></Link>
-                <div className="trademarks">{this.state.hero.trademarks}</div>
-            </div>
-        );
-    };
+  render() {
+    return (
+      <div className="blog-post">
+        <LoadingScreen
+            loading={!this.state.loaded}
+            bgColor='#F7F2EF'
+            spinnerColor='#354654'
+            textColor='#0A100D'
+            logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
+            text='Loading...'
+            children=''
+        />
+        <Title>{this.state.post.title}</Title>
+        <ReactMarkdown
+            source={this.state.post.text}
+            // source={this.state.markdown} //for development purposes
+            renderers={{
+                code: CodeBlock,
+            }}
+        />
+        <Link to='/blog'><Back>Go to posts</Back></Link>
+        <div className="trademarks">{this.state.hero.trademarks}</div>
+      </div>
+    );
+  }
 }
 
-const Center = styled.div`
-    width: 400px;
-    // height: 400px;
-    margin-left: auto;
-    margin-right: auto;
-
-`;
+ReactMarkdown.propTypes = {
+  value: PropTypes.string,
+};
 
 const Text = styled.div`
     font-size: 17px;
@@ -93,8 +93,8 @@ const Text = styled.div`
 `;
 
 const Title = styled.div`
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     font-family: 'Ubuntu Mono', monospace;
     font-weight: bold;
     font-size: 25px;
@@ -131,4 +131,4 @@ const Back = styled.button`
     }
 `;
 
-export default BlogArticle;
+export default BlogPost;

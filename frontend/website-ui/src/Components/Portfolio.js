@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
-
 import NavigationBar from './NavigationBar';
 import '../ComponentsCSS/Portfolio.css';
 
@@ -35,6 +34,7 @@ class Portfolio extends React.Component {
                     textColor='#0A100D'
                     logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
                     text='Loading...'
+                    children=''
                 />
                 <NavigationBar />
                 <div className="content">

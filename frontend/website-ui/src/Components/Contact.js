@@ -74,7 +74,7 @@ class Contact extends React.Component {
         }
 
         if (this.state.can_send === true) {
-            const form = await axios.post('http://127.0.0.1:8000/api/send_email', {
+            const form = await axios.post('http://127.0.0.1:8000/api/send_email/', {
                 name, email, message, subject, client_ip, count
             }).then((data) => {
                 console.log(data, form);
@@ -88,7 +88,7 @@ class Contact extends React.Component {
 
     componentDidMount() {
         // const { match: { params } } = this.props;
-        axios.get('http://127.0.0.1:8000/api/send_email')
+        axios.get('http://127.0.0.1:8000/api/send_email/')
             .then(res => {
                 this.setState({
                     email_config: JSON.parse(res.data),
@@ -100,15 +100,15 @@ class Contact extends React.Component {
                     hero: res.data[0],
                 })
             })
-            .then(setTimeout(() => {
-                this.setState({loaded: true})
-            }, 500))
         axios.get('https://jsonip.com')
             .then(res => {
                 this.setState({
                     client_ip: res.data.ip,
                 });
             })
+            .then(setTimeout(() => {
+                this.setState({loaded: true})
+            }, 500))
     }
 
     render() {
@@ -121,11 +121,12 @@ class Contact extends React.Component {
                     textColor='#0A100D'
                     logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
                     text='Loading...'
+                    children=''
                 />
                 <CustomNotification ref={this.customNotification}/>
                 <NavigationBar />
                 <Form onSubmit={this.handleSubmit}>
-                    <h1>Contact me!</h1>
+                    <h1 className="contact-title ">Contact me!</h1>
                     <FormGroup className="formgroup">
                         <Label for="name" className="label">Your Name</Label>
                         <Input

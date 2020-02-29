@@ -39,9 +39,6 @@ class Home extends React.Component {
                 hero: res.data[0],
             })
         })
-        .then(setTimeout(() => {
-            this.setState({loaded: true})
-        }, 500))
         axios.get('http://127.0.0.1:8000/api/links/')
             .then(res => {
                 this.setState({
@@ -58,6 +55,9 @@ class Home extends React.Component {
                     resume: res.data[10],
                 })
             })
+            .then(setTimeout(() => {
+                this.setState({loaded: true})
+            }, 500))
     }
 
     render() {
@@ -70,6 +70,7 @@ class Home extends React.Component {
                     textColor='#0A100D'
                     logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
                     text='Loading...'
+                    children=''
                 />
 
                 <div style={{
@@ -80,11 +81,11 @@ class Home extends React.Component {
                 <div className="hero-resume"><a href={this.state.resume.url}>{this.state.hero.resume_label}</a></div>
                 <hr />
                 <div className="container">
-                    <div className="box"><h1><Link to="/about">{this.state.about.label}</Link></h1></div>
-                    <div className="box"><h1><Link to="/blog">{this.state.blog.label}</Link></h1></div>
-                    <div className="box"><h1><Link to="/portfolio">{this.state.portfolio.label}</Link></h1></div>
-                    <div className="box"><h1><Link to="/contact">{this.state.contact.label}</Link></h1></div>
-                    <div className="box boxd"><h1><Link to="/destroy">{this.state.destroy.label}</Link></h1></div>
+                    <Link to="/about"><div className="box"><h1>{this.state.about.label}</h1></div></Link>
+                    <Link to="/blog"><div className="box"><h1>{this.state.blog.label}</h1></div></Link>
+                    <Link to="/portfolio"><div className="box"><h1>{this.state.portfolio.label}</h1></div></Link>
+                    <Link to="/contact"><div className="box"><h1>{this.state.contact.label}</h1></div></Link>
+                    <Link to="/destroy"><div className="box boxd"><h1>{this.state.destroy.label}</h1></div></Link>
                 </div>
                 <hr />
                 <div className="containericons">

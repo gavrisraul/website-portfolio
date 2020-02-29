@@ -38,11 +38,12 @@ class Email(models.Model):
         return self.email + self.client_ip
 
 
-class Article(models.Model):
+class Post(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=100)
     text = models.TextField()
     image = models.CharField(max_length=300)
+    date = models.DateField()
 
     def __str__(self):
         return self.title

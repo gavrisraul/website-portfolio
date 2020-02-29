@@ -14,24 +14,27 @@ class Blog extends React.Component {
         super(props);
         this.state = {
             hero: {},
-            articles: [],
+            posts: [],
             loaded: false,
         }
-        this.articlesHTML = [];
+        this.postsHTML = [];
     }
 
-    getArticlesHTML(rawArticles) {
-        this.articlesHTML = rawArticles.map(element =>
-            <Link key={element.id} to={`/article/${element.id}`}>
-                <div className="article" key={element.id}>
-                    <ArticleImage src={element.image}/>
-                    <span className="article-id" key={element.id}>{element.id}.
-                    </span>{element.title}
-                </div>
-            </Link>
+    getPostsHTML(rawPosts) {
+        this.postsHTML = rawPosts.map(element =>
+            <div>
+                <Link key={element.id + Math.random()} to={`/post/${element.id}`}>
+                    <div className="post" key={element.id + Math.random()}>
+                        <PostImage src={element.image} />
+                        <span className="post-id" key={element.id + Math.random()}>{element.id}.
+                        </span>{element.title}
+                    </div> 
+                </Link>
+                <div key={element.id + Math.random()} className="date-posted">{element.date}</div>
+            </div>
         );
 
-        return this.articlesHTML;
+        return this.postsHTML;
     }
 
     componentDidMount() {
@@ -41,15 +44,15 @@ class Blog extends React.Component {
                 hero: res.data[0],
             })
         })
-        .then(setTimeout(() => {
-            this.setState({loaded: true})
-        }, 500))
-        axios.get('http://127.0.0.1:8000/api/article/')
+        axios.get('http://127.0.0.1:8000/api/post/')
             .then(res => {
                 this.setState({
-                    articles: res.data,
+                    posts: res.data,
                 })
             })
+            .then(setTimeout(() => {
+                this.setState({loaded: true})
+            }, 500))
     }
 
     render() {
@@ -62,10 +65,11 @@ class Blog extends React.Component {
                     textColor='#0A100D'
                     logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
                     text='Loading...'
+                    children=''
                 />
                 <NavigationBar />
-                <div className="box-articles">
-                    {this.getArticlesHTML(this.state.articles)}
+                <div className="box-posts">
+                    {this.getPostsHTML(this.state.posts)}
                 </div>
                 <h5 className="trademarks">{this.state.hero.trademarks}</h5>
             </div>
@@ -73,7 +77,7 @@ class Blog extends React.Component {
     };
 }
 
-const ArticleImage = styled.img`
+const PostImage = styled.img`
     width: 50px;
     height: 50px;
     border-radius: 50%;

@@ -89,12 +89,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'website', # name of the database
         'USER': 'root', # user to log into
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD'), # password for user
-        'HOST': 'localhost', # host for the server
-        'PORT': '3225', # port
-        'OPTIONS': {
-            'read_default_file': '/etc/my.cnf', # cnf file for mysql, could be in /etc/mysql/my.cnf
-        },
+        'PASSWORD': 'rootpassword', # password for user
+        'HOST': 'db', # host for the server if development is 127.0.0.1
+        'PORT': '3306', # port
+        # 'OPTIONS': {
+        #     'read_default_file': '/etc/mysql/my.cnf', # cnf file for mysql, could be in /etc/mysql/my.cnf
+        # },
     }
 }
 

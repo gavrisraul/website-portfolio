@@ -9,3 +9,4 @@ django-filter
 virtualenvwrapper
 gunicorn
 mysqlclient
+django-mysql

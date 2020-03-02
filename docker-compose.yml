@@ -1,22 +1,42 @@
 version: "3"
 
 services:
+  db:
+    image: mysql:5.7
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - '3306:3306'
+    expose:
+      - "3306"
+    volumes:
+      - ./backend/db:/var/lib/mysql
+    environment:
+       MYSQL_HOST: 'db'
+       MYSQL_DATABASE: 'website'
+       MYSQL_USER: 'root'
+       MYSQL_PASSWORD: 'password'
+       MYSQL_ROOT_PASSWORD: 'rootpassword'
   backend:
     # image: python:3.6
-    build: ./backend/src
+    build: ./backend
     volumes:
-      - ./backend/src/:/backend/src
+      - ./backend/:/backend
     ports:
       - "8000:8000"
-    # working_dir: /backend/src
+    # working_dir: /backend
     # command: sh entrypoint-backend.sh
+    depends_on:
+      - db
+    links:
+      - db
   frontend:
     # image: node:13.8.0-alpine
     # command: sh entrypoint-frontend.sh
     # working_dir: /frontend/website-ui
-    build: ./frontend/website-ui
+    build: ./frontend
     volumes:
-      - ./frontend/website-ui/:/frontend/website-ui
+      - ./frontend/:/frontend/
     ports:
       - "80:80"
   # nginx:
@@ -26,5 +46,5 @@ services:
   #     - 3000:8000
   #   volumes:
   #     - ./frontend/website-ui/build:/var/www/website
-  #   depends_on:
-  #     - backend
+    # depends_on:
+    #   - backend

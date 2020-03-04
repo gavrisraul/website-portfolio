@@ -1,19 +1,42 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Code&display=swap');
 
 .blog-post {
-    padding-left: 15%;
-    padding-right: 15%;
-    font-size: 20px;
+    padding-left: 35%;
+    padding-right: 35%;
+    font-size: 18px;
     font-family: 'Fira Code';
+    text-align: justify;
+    line-height: 1.1;
+}
+
+.summary {
+    position: absolute;
+    margin-top: 100px;
 }
 
 code {
     font-family: 'Fira Code';
 }
 
-@media screen and (max-width: 367px) {
+@media screen and (max-width: 1000px) {
     .blog-post {
-        padding-left: 1%;
-        padding-right: 1%;
+        padding-left: 30%;
+        padding-right: 30%;
     }
-  }
+}
+
+@media screen and (max-width: 800px) {
+    .blog-post {
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .blog-post {
+        text-align: left;
+        line-height: 1.2;
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}

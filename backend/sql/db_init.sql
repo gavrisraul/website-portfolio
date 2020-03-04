@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS website;
 
 USE website;
 
-INSERT IGNORE portfolio_hero (id, name, surname, hero_image, hero_profession, hero_description, resume_label, trademarks) VALUES (1, 'Gavriș', 'Raul', 'https://raw.githubusercontent.com/gavrisraul/dotfiles/master/.wallpapers/raul.png', 'Software Developer', 'Hello, my name is Raul Gavriș. I am a Software Developer and this is my website. Go checkout my <a href="/portfolio">portfolio</a> or <a href="/blog">blog</a> posts to know more about me! If you want something done in code, <a href="/contact">contact me!</href>', 'Resume', 'Raul Gavris © 2020');
+INSERT IGNORE portfolio_hero (id, name, surname, hero_image, hero_profession, hero_description, resume_label, trademarks) VALUES (1, 'Gavriș', 'Raul', 'https://raw.githubusercontent.com/gavrisraul/dotfiles/master/.wallpapers/raul.png', 'Software Developer', 'Hello, my name is Raul Gavriș. I am a Software Developer and this is my website. Go checkout my <a href="/portfolio">portfolio</a> or <a href="/blog">blog</a> posts to know more about me! If you want something done in code, <a href="/contact">contact me!</href>', 'Resume', 'Raul Gavriș © 2020');
 
 INSERT INTO portfolio_links (id, url, label) VALUES (1, '/about', 'About');
 INSERT INTO portfolio_links (id, url, label) VALUES (2, '/blog', 'Blog');
@@ -51,7 +51,7 @@ Here it begins my path of becoming a software engineer.
 ### Some of the topics I would like to post are:  
 -> How I set up my Arch Linux with i3, tmux, vim(neovim).  
 -> How I created this website with react, django, mysql and docker.  
--> Algorithms and Data structures I am studying.', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/blog-post-image.png', '2020-2-29');
+-> Algorithms and Data structures I am studying.', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/blog-post-image.png', '2020-2-29');
 
 INSERT INTO portfolio_post (id, title, text, image, date) VALUES (2, 'Blog Post 2 - TBA', '# TBA  
-----', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/blog-post-image.png', '2020-3-10'); 
+----', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/blog-post-image.png', '2020-3-10'); 

@@ -66,4 +66,7 @@
     .date-posted {
         transform: translate(130%, 100%);
     }
+    .box-posts .post {
+        margin-top: 20%;
+    }
 }

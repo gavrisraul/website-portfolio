@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import CodeBlock from './CodeBlock';
-// import Post1 from '../ComponentsMD/Post1.md'; // for development purposese
+import Post1 from '../ComponentsMD/Post1.md'; // for development purposese
 
 import '../ComponentsCSS/BlogPost.css';
 
@@ -22,9 +22,23 @@ class BlogPost extends React.PureComponent {
         };
     }
 
-    // componentWillMount() {
-    //     fetch(Post1).then(res => res.text()).then(text => this.setState({ markdown: text }));
-    // }
+    getSummary() {
+        let a_href_with_ids = Array.from(document.querySelectorAll('a[id]'));
+        let summary = [];
+        for ( let i = 0; i < a_href_with_ids.length; ++i) {
+            let element = a_href_with_ids[i];
+            summary.push(element)
+        }
+        summary = summary.map(element =>
+            <a href={ "#" + element.id }>{element.id}<br/></a>
+        );
+        return summary;
+        
+    }
+
+    componentWillMount() {
+        fetch(Post1).then(res => res.text()).then(text => this.setState({ markdown: text }));
+    }
 
     componentDidMount() {
         const { match: { params } } = this.props;
@@ -47,23 +61,28 @@ class BlogPost extends React.PureComponent {
 
   render() {
     return (
-      <div className="blog-post">
+      <div>
         <LoadingScreen
             loading={!this.state.loaded}
             bgColor='#F7F2EF'
             spinnerColor='#354654'
             textColor='#0A100D'
-            logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/website-ui/public/loading.png'
+            logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/loading.png'
             text='Loading...'
             children=''
         />
+        <div className="summary">
+            { this.getSummary() }
+        </div>
         <Title>{this.state.post.title}</Title>
         <ReactMarkdown
-            source={this.state.post.text}
-            // source={this.state.markdown} //for development purposes
+            className="blog-post"
+            // source={this.state.post.text}
+            source={this.state.markdown} //for development purposes
             renderers={{
                 code: CodeBlock,
             }}
+            escapeHtml={false}
         />
         <Link to='/blog'><Back>Go to posts</Back></Link>
         <div className="trademarks">{this.state.hero.trademarks}</div>

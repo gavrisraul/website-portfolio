@@ -90,11 +90,12 @@ DATABASES = {
         'NAME': 'website', # name of the database
         'USER': 'root', # user to log into
         'PASSWORD': '', # password for user
-        'HOST': '127.0.0.1', # host for the server if development is 127.0.0.1
+        'HOST': '127.0.0.1', # host for the server if development is 127.0.0.1 for production is db
         # 'PORT': '3306', # port
         'OPTIONS': {
             'read_default_file': '/etc/mysql/my.cnf', # cnf file for mysql, could be in /etc/mysql/my.cnf
         },
+        # we don't need options in production
     }
 }
 

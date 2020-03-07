@@ -16,12 +16,14 @@ INSERT INTO portfolio_links (id, url, label) VALUES (9, 'https://www.instagram.c
 INSERT INTO portfolio_links (id, url, label) VALUES (10, 'https://www.youtube.com/channel/UC8zs6y6zyId75_EYzAjgRjA', 'youtube');
 INSERT INTO portfolio_links (id, url, label) VALUES (11, 'https://docs.google.com/document/d/1cCAD423vpQx2Nx8Bg0oH_kSVi3r2WCmfH6QfNee4EDM', 'resume');
 
-INSERT INTO portfolio_post (id, title, text, image, date) VALUES (1, 'Blog Post 1 - Hello World!', '----
+INSERT INTO portfolio_post (id, title, text, image, date, likes) VALUES (1, 'Blog Post 1 - Hello World!', '<div id="Introduction" class="goHere">
+
+----
 # First Blog Post
 ## Hello world!
 
-My name is Raul Gavriș, I live in Romania, Cluj-Napoca. I am software developer and a student at UBB Faculty of Mathematics and Computer Science(2021 expected graduation) and here I am, writing my first blog post.  
-
+My name is Raul Gavriș, I live in Romania, Cluj-Napoca. I am a software developer and a student at UBB
+Faculty of Mathematics and Computer Science(2021 expected graduation) and here I am, writing my first blog post.  
 
 
 ```cpp
@@ -41,17 +43,24 @@ After my introduction to programming using the pseudocode I went to C/C++.
 
 Then I saw what the power of the computer is.
 
-First of all, I would like to say that I love to code and to see how the code I write slowly transforms into an application that can help with the automation of tasks or simply to code just for fun.  
+First of all, I would like to say that I love to code and to see how the code I write slowly transforms into an application that can 
+help with the automation of tasks or simply to code just for fun.  
 
 
 I would like for this blog to post things that I am learning or have learned and to share my experience with you.  
 
-Here it begins my path of becoming a software engineer.  
+Here it begins my path of becoming a software engineer.
+</div>  
+
+<div id="To_be_posted" class="goHere">
 
 ### Some of the topics I would like to post are:  
+-> How git works.  
 -> How I set up my Arch Linux with i3, tmux, vim(neovim).  
 -> How I created this website with react, django, mysql and docker.  
--> Algorithms and Data structures I am studying.', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/blog-post-image.png', '2020-2-29');
+-> Algorithms and Data structures I am studying.
+</div>  
 
-INSERT INTO portfolio_post (id, title, text, image, date) VALUES (2, 'Blog Post 2 - TBA', '# TBA  
-----', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/blog-post-image.png', '2020-3-10'); 
+<div id="Comments" class="goHere"></div>', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/blog-post-image.png', '2020-2-29', '0');
+
+INSERT INTO portfolio_post (id, title, text, image, date, likes) VALUES (2, 'Blog Post 2 - Git tutorial', 'TBA', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/blog-post-image.png', '2020-3-10', '0');

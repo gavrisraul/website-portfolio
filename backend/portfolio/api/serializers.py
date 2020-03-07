@@ -28,10 +28,10 @@ class EmailSerializerList(serializers.ModelSerializer):
 class PostSerializerList(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('id', 'title', 'image', 'date')
+        fields = ('id', 'title', 'image', 'date', 'likes')
 
 
 class PostSerializerRetrieve(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('id', 'title', 'image', 'text')
+        fields = ('id', 'title', 'image', 'text', 'likes')

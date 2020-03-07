@@ -5,6 +5,7 @@ body {
   padding: 0;
   background: #F7F2EF;
   font-family: 'Ubuntu Mono', monospace;
+  overflow-x: hidden;
 }
 
 .App {

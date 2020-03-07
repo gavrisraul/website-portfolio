@@ -25,12 +25,13 @@ class Blog extends React.Component {
             <div>
                 <Link key={element.id + Math.random()} to={`/post/${element.id}`}>
                     <div className="post" key={element.id + Math.random()}>
-                        <PostImage src={element.image} />
+                        <PostImage className="blog-img" src={element.image} />
                         <span className="post-id" key={element.id + Math.random()}>{element.id}.
                         </span>{element.title}
                     </div> 
                 </Link>
                 <div key={element.id + Math.random()} className="date-posted">{element.date}</div>
+                <div key={element.id + Math.random()} className="likes-blog">likes: {element.likes}</div> 
             </div>
         );
 

@@ -4,12 +4,38 @@ import LoadingScreen from 'react-loading-screen';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown/with-html';
+import $ from "jquery";
+import Disqus from 'disqus-react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import CodeBlock from './CodeBlock';
-import Post1 from '../ComponentsMD/Post1.md'; // for development purposese
+
+
+// import Post2 from '../ComponentsMD/Post2.md'; // for development purposese
 
 import '../ComponentsCSS/BlogPost.css';
 
+
+$.fn.isInViewport = function() {
+    var elementTop = $(this).position().top;
+    var elementBottom = elementTop + $(this).outerHeight();
+
+    var viewportTop = $(window).scrollTop();
+    var viewportBottom = viewportTop + $(window).innerHeight();
+
+    return (elementBottom > viewportTop) && (elementTop < viewportBottom);
+};
+
+$(window).scroll(function () {
+    $('.goHere').each(function(i, el){
+       if ($(this).isInViewport()) {
+            $('.'+$(this).attr('id')).attr({'class': 'active_anchor ' + $(this).attr('id')});
+       } else {
+            $('.'+$(this).attr('id')).attr({'class': 'inactive_anchor ' + $(this).attr('id')});
+       }
+    })
+ });
 
 class BlogPost extends React.PureComponent {
     constructor() {
@@ -19,26 +45,62 @@ class BlogPost extends React.PureComponent {
             hero: {},
             post: {},
             loaded: false,
+            alreadyLiked: '',
+        };
+        this.disqusShortname = 'raulgavris-com';
+        this.disqusConfig = {
+            url: "http://localhost:3000",
+            identifier: this.state.post.id,
+            title: this.state.post.title,
         };
     }
 
-    getSummary() {
-        let a_href_with_ids = Array.from(document.querySelectorAll('a[id]'));
-        let summary = [];
-        for ( let i = 0; i < a_href_with_ids.length; ++i) {
-            let element = a_href_with_ids[i];
-            summary.push(element)
-        }
-        summary = summary.map(element =>
-            <a href={ "#" + element.id }>{element.id}<br/></a>
-        );
-        return summary;
-        
+    async handleSubmit() {
+        let likes = parseInt(this.state.post.likes);
+        likes = likes + 1;
+        likes = String(likes)
+        const { match: { params } } = this.props;
+        await axios.post(`http://127.0.0.1:8000/api/post/${params.id}/`, {
+            likes
+        }).then((data) => {
+            if ( data.request.status === 200 ) {
+                this.setState(prevState => ({
+                    post: {
+                        ...prevState.post,
+                        likes: likes,
+                    },
+                    alreadyLiked: 'Thanks!',
+
+                }));
+            } else if ( data.request.status === 210 ) {
+                this.setState({
+                    alreadyLiked: 'You already liked!',
+                });
+            }
+        }).catch((err) => {
+            // console.log(err);
+        })
     }
 
-    componentWillMount() {
-        fetch(Post1).then(res => res.text()).then(text => this.setState({ markdown: text }));
+    getSummary() {
+        let div_with_ids = Array.from(document.querySelectorAll('div[id]:not(#root):not(#disqus_thread)'));
+        let summary = [];
+        for ( let i = 0; i < div_with_ids.length; ++i) {
+            let element = div_with_ids[i];
+            summary.push(element);
+        }
+        summary = summary.map(element =>
+            <a 
+                className={ window.location.href.includes(element.id)? "active_anchor " + element.id : "inactive_anchor " + element.id }
+                href={ "#" + element.id }>{element.id.replace(/\_/g, ' ')}<br/>
+            </a>
+        );
+        return summary;
     }
+
+    // componentWillMount() {
+    //     fetch(Post2).then(res => res.text()).then(text => this.setState({ markdown: text }));
+    // }
 
     componentDidMount() {
         const { match: { params } } = this.props;
@@ -61,32 +123,39 @@ class BlogPost extends React.PureComponent {
 
   render() {
     return (
-      <div>
-        <LoadingScreen
-            loading={!this.state.loaded}
-            bgColor='#F7F2EF'
-            spinnerColor='#354654'
-            textColor='#0A100D'
-            logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/loading.png'
-            text='Loading...'
-            children=''
-        />
-        <div className="summary">
-            { this.getSummary() }
+        <div>
+            <LoadingScreen
+                loading={!this.state.loaded}
+                bgColor='#F7F2EF'
+                spinnerColor='#354654'
+                textColor='#0A100D'
+                logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/loading.png'
+                text='Loading...'
+                children=''
+            />
+            <div className="summary"> { this.getSummary() } </div>
+            <Title>{this.state.post.title}</Title>
+            <div className="likes">likes: {this.state.post.likes} {this.state.alreadyLiked} <FontAwesomeIcon onClick={()=>{
+                this.handleSubmit();
+            }} className="like-icon" size="2x" icon={faThumbsUp} /></div>
+            
+            <Link to='/blog'><Back>Go to posts</Back></Link>
+            <ReactMarkdown
+                className="blog-post"
+                source={this.state.post.text}
+                // source={this.state.markdown} //for development purposes
+                renderers={{
+                    code: CodeBlock,
+                }}
+                escapeHtml={false}
+                unwrapDisallowed={true}
+            />
+            <Link to='/blog'><Back>Go to posts</Back></Link>
+
+            <Disqus.DiscussionEmbed shortname={this.disqusShortname} config={this.disqusConfig} />
+
+            <div className="trademarks">{this.state.hero.trademarks}</div>
         </div>
-        <Title>{this.state.post.title}</Title>
-        <ReactMarkdown
-            className="blog-post"
-            // source={this.state.post.text}
-            source={this.state.markdown} //for development purposes
-            renderers={{
-                code: CodeBlock,
-            }}
-            escapeHtml={false}
-        />
-        <Link to='/blog'><Back>Go to posts</Back></Link>
-        <div className="trademarks">{this.state.hero.trademarks}</div>
-      </div>
     );
   }
 }
@@ -94,22 +163,6 @@ class BlogPost extends React.PureComponent {
 ReactMarkdown.propTypes = {
   value: PropTypes.string,
 };
-
-const Text = styled.div`
-    font-size: 17px;
-    font-family: 'Ubuntu Mono', monospace;
-    color: #354654;
-    margin-right: 200px;
-    margin-left: 200px;
-    @media (max-width: 650px) {
-        margin-right: 100px;
-        margin-left: 100px;
-    }
-    @media (max-width: 400px) {
-        margin-right: 50px;
-        margin-left: 50px;
-    }
-`;
 
 const Title = styled.div`
     margin-top: 50px;

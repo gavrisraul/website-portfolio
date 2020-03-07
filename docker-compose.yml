@@ -12,11 +12,11 @@ services:
     volumes:
       - ./backend/db:/var/lib/mysql
     environment:
-       MYSQL_HOST: 'db'
-       MYSQL_DATABASE: 'website'
-       MYSQL_USER: 'root'
-       MYSQL_PASSWORD: 'password'
-       MYSQL_ROOT_PASSWORD: 'rootpassword'
+       MYSQL_HOST: ${DB_HOST}
+       MYSQL_DATABASE: ${DB_NAME}
+       MYSQL_USER: ${DB_USER}
+       MYSQL_PASSWORD: ${DB_PASSWORD}
+       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
   backend:
     # image: python:3.6
     build: ./backend

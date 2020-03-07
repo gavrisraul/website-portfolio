@@ -34,7 +34,7 @@ class Destroy extends React.Component {
                     text='Loading...'
                     children=''
                 />
-                Destroy
+                404 Not found <br /> <br />Under development
                 <h5 className="trademarks">{this.state.hero.trademarks}</h5>
             </div>
         );

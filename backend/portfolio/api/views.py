@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from portfolio.models import Hero, Links, Email, Post
+from portfolio.models import Hero, Links, Email, Post, PostLikes
 from portfolio.api.serializers import (
     HeroSerializerList, LinksSerializerList, PostSerializerList,
     PostSerializerRetrieve, EmailSerializerList)
@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from django.core.serializers import serialize
 from django.utils import timezone
+from django.db import connection
 
 import os
 import pytz
@@ -27,6 +28,33 @@ class PostListView(ListAPIView):
 class PostRetrieveView(RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializerRetrieve
+
+
+    def post(self, request, pk):
+        client_ip = requests.get('https://jsonip.com')
+        client_ip = json.loads(client_ip.text)['ip']
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM website.portfolio_postlikes where id='{pk}' and client_ip='{client_ip}'")
+        row = cursor.fetchone()
+
+        if not row:
+            post = Post.objects.get(id=pk)
+            likes = request.data['likes']
+            post.likes = likes
+            post.save()
+
+            post_likes = PostLikes()
+            post_likes.id = pk
+            post_likes.client_ip = client_ip
+            post_likes.save()
+
+            data = {'succes': 1}
+
+            return Response(data)
+        else:
+            data = {'failed': 1, 'message': 'You already liked this article'}
+            return Response(data, status=210)
+
 
 
 class LinksListView(ListAPIView):
@@ -69,9 +97,9 @@ class EmailListView(ListAPIView):
             server = smtplib.SMTP('smtp.gmail.com:587')
             server.ehlo()
             server.starttls()
-            server.login('rg.raulgavris@gmail.com', os.environ.get('EMAIL_PASSWORD'))
+            server.login(os.environ.get('EMAIL'), os.environ.get('EMAIL_PASSWORD'))
             message = 'Subject: {}\n\n{}'.format(str(request.data['subject']), request.data['email'] + "\n" + msg)
-            server.sendmail('rg.raulgavris@gmail.com', 'rg.raulgavris@gmail.com', message)
+            server.sendmail(os.environ.get('EMAIL'), os.environ.get('EMAIL'), message)
             server.quit()
             print("Success: Email sent!")
         except:

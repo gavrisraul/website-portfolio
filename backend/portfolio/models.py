@@ -50,7 +50,8 @@ class Post(models.Model):
         return self.title
 
 class PostLikes(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
+    post_liked = models.IntegerField()
     client_ip = models.CharField(max_length=30)
 
     def __str__(self):

@@ -33,8 +33,9 @@ class PostRetrieveView(RetrieveAPIView):
     def post(self, request, pk):
         client_ip = requests.get('https://jsonip.com')
         client_ip = json.loads(client_ip.text)['ip']
+
         cursor = connection.cursor()
-        cursor.execute(f"SELECT * FROM website.portfolio_postlikes where id='{pk}' and client_ip='{client_ip}'")
+        cursor.execute(f"SELECT * FROM website.portfolio_postlikes where post_liked='{pk}' and client_ip='{client_ip}'")
         row = cursor.fetchone()
 
         if not row:
@@ -43,10 +44,7 @@ class PostRetrieveView(RetrieveAPIView):
             post.likes = likes
             post.save()
 
-            post_likes = PostLikes()
-            post_likes.id = pk
-            post_likes.client_ip = client_ip
-            post_likes.save()
+            cursor.execute(f"INSERT INTO website.portfolio_postlikes (post_liked, client_ip) values('{pk}', '{client_ip}')")
 
             data = {'succes': 1}
 

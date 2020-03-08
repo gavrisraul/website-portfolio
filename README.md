@@ -29,7 +29,7 @@ default-character-set=utf8
 
 Login into Docker container with docker exec -it mysql_id /bin/bash and run apt-get update
 Then run apt-get install vim apt-get install locales
-Run dpkg-reconfigure locales and select code_for_romania for ro_RO.UTF-8
+Run dpkg-reconfigure locales and select 384 for ro_RO.UTF-8
 Open ~/.bashrc and add
 export LANG=ro_RO.utf8
 

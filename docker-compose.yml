@@ -6,7 +6,7 @@ services:
     image: mysql:5.7
     restart: always
     command: --default-authentication-plugin=mysql_native_password
-    entrypoint: /bin/bash -c "source ./.env-docker"
+    # entrypoint: /bin/bash -c "source ./.env"
     ports:
       - '${DB_PORT}:${DB_PORT}'
     expose:

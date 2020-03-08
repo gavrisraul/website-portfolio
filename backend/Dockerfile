@@ -12,7 +12,7 @@ RUN pip install -r requirements.txt
 
 # COPY entrypoint-backend.sh /usr/local/bin 
 
-RUN /bin/bash -c "source ./.env"
+# RUN /bin/bash -c "source ../.env"
 
 EXPOSE 8000
 

@@ -10,3 +10,4 @@ virtualenvwrapper
 gunicorn
 mysqlclient
 django-mysql
+django-dotenv

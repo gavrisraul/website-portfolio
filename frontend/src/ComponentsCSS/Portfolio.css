@@ -18,7 +18,13 @@
 .content div:hover {
     background: #354654;
     border: 1px solid #0A100D;
-    transform: scale(1.01);
+    transform: scale(1.3);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.content div:active {
+    transform: scale(1);
 }
 
 .porfolio-item-one {

@@ -83,7 +83,7 @@ class BlogPost extends React.PureComponent {
     }
 
     getSummary() {
-        let div_with_ids = Array.from(document.querySelectorAll('div[id]:not(#root):not(#disqus_thread)'));
+        let div_with_ids = Array.from(document.querySelectorAll('div[id][class*="goHere"]'));
         let summary = [];
         for ( let i = 0; i < div_with_ids.length; ++i) {
             let element = div_with_ids[i];

@@ -44,6 +44,10 @@
     opacity: .8;
 }
 
+.container .box:active {
+    transform: scale(0.8);
+}
+
 .container .box h1 {
     margin: 0;
     padding: 0;
@@ -95,6 +99,10 @@ a:visited {
 .hero:hover {
     opacity: .7;
     cursor: pointer;
+}
+
+.hero:active {
+    opacity: 1;
 }
 
 .hero-name {
@@ -154,6 +162,12 @@ a:visited {
     cursor: pointer;
 }
 
+.hero-resume:active::after {
+    width: 0;
+    background-color: #800000;
+}
+
+
 .icon {
     color: #0A100D;
     display: grid;
@@ -167,6 +181,10 @@ a:visited {
     transform: scale(1.2);
     opacity: 1;
     cursor: pointer;
+}
+
+.icon:active {
+    transform: scale(0.8);
 }
 
 hr {

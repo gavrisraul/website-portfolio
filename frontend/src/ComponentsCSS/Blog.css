@@ -37,6 +37,10 @@
     border-bottom-left-radius: 20px;
 }
 
+.box-posts .post:active {
+    transform: scale(1);
+}
+
 .box-posts .post-id {
     width: 20px;
     height: 20px;

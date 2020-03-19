@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS website;
 
 USE website;
 
-INSERT IGNORE portfolio_hero (id, name, surname, hero_image, hero_profession, hero_description, resume_label, trademarks) VALUES (1, 'Gavriș', 'Raul', 'https://raw.githubusercontent.com/gavrisraul/dotfiles/master/.wallpapers/raul.png', 'Software Developer', 'Hello, my name is Raul Gavriș. I am a Software Developer and this is my website. Go checkout my <a href="/portfolio">portfolio</a> or <a href="/blog">blog</a> posts to know more about me! If you want something done in code, <a href="/contact">contact me!</href>', 'Resume', 'Raul Gavriș © 2020');
+INSERT IGNORE portfolio_hero (id, name, surname, hero_image, hero_profession, hero_description, resume_label, trademarks) VALUES (1, 'Gavriș', 'Raul', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/assets/raul.png', 'Software Developer', 'Hello, my name is Raul Gavriș. I am a Software Developer and this is my website. Go checkout my <a href="/portfolio">portfolio</a> or <a href="/blog">blog</a> posts to know more about me! If you want something done in code, <a href="/contact">contact me!</href>', 'Resume', 'Raul Gavriș © 2020');
 
 INSERT INTO portfolio_links (id, url, label) VALUES (1, '/about', 'About');
 INSERT INTO portfolio_links (id, url, label) VALUES (2, '/blog', 'Blog');
@@ -61,6 +61,6 @@ Here it begins my path of becoming a software engineer.
 -> Algorithms and Data structures I am studying.
 </div>  
 
-<div id="Comments" class="goHere"></div>', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/blog-post-image.png', '2020-2-29', '0');
+<div id="Comments" class="goHere"></div>', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/assets/blog-post-image.png', '2020-2-29', '0');
 
-INSERT INTO portfolio_post (id, title, text, image, date, likes) VALUES (2, 'Blog Post 2 - Git tutorial', 'TBA', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/blog-post-image.png', '2020-3-10', '0');
+INSERT INTO portfolio_post (id, title, text, image, date, likes) VALUES (2, 'Blog Post 2 - Git tutorial', 'TBA', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/assets/blog-post-image.png', '2020-3-10', '0');

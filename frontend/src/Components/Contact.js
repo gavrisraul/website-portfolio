@@ -118,7 +118,7 @@ class Contact extends React.Component {
                     bgColor='#F7F2EF'
                     spinnerColor='#354654'
                     textColor='#0A100D'
-                    logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/public/loading.png'
+                    logoSrc='https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/assets/loading.png'
                     text='Loading...'
                     children=''
                 />

@@ -74,7 +74,7 @@ class Contact extends React.Component {
         }
 
         if (this.state.can_send === true) {
-            const form = await axios.post('http://127.0.0.1:8000/api/send_email/', {
+            await axios.post('http://127.0.0.1:8000/api/send_email/', {
                 name, email, message, subject, client_ip, count
             }).then((data) => {
                 // console.log(data, form);

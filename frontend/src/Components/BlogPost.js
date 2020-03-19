@@ -92,7 +92,7 @@ class BlogPost extends React.PureComponent {
         summary = summary.map(element =>
             <a 
                 className={ window.location.href.includes(element.id)? "active_anchor " + element.id : "inactive_anchor " + element.id }
-                href={ "#" + element.id }>{element.id.replace(/\_/g, ' ')}<br/>
+                href={ "#" + element.id }>{element.id.replace(/_/g, ' ')}<br/>
             </a>
         );
         return summary;

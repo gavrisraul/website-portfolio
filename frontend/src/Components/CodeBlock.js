@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { gruvboxDark, tomorrowNightEighties } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { gruvboxDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+// import { tomorrowNightEighties } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
 
 
 export default class CodeBlock extends React.PureComponent {

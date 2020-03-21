@@ -1,5 +1,7 @@
 sendgrid.env
-./frontend/website-ui/node_modules
+node_modules
 .vscode
 *.pyc
 __pycache__
+tags
+

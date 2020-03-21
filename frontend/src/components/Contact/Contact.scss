@@ -1,0 +1,87 @@
+@import '../../styles/variables';
+
+Form {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+
+.formgroup {
+  width : 500px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  /* text-decoration: underline; */
+  margin-bottom: 3%;
+}
+
+.input {
+  width: 300px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid $color4;
+  resize: none;
+  font-size: 20px;
+  font-family: 'VT323', sans-serif;
+  color: $color2;
+}
+
+.textarea {
+  height: 100px;
+  width: 300px;
+}
+
+.submit {
+  height: 40px;
+  width: 150px;
+  background: $color3;
+  border: 2px solid $color4;
+  transition: .3s;
+  opacity: .6;
+  font-size: 20px;
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.submit:hover {
+  background: $color5;
+  transform: scale(1.1);
+  border: 1.5px solid $color4;
+  opacity: 0.8;
+  cursor: pointer;
+  color: $color3;
+}
+
+.submit:active {
+  transform: scale(0.9);
+}
+
+.contact-title {
+  margin-bottom: 15%;
+  font-size: 55px;
+}
+
+@media screen and (max-width: 430px) {
+  Form {
+    width: 300px;
+  }
+  .formgroup {
+    width: 300px;
+  }
+  .contact-title  {
+    margin-bottom: 15%;
+    font-size: 45px;
+  }
+}

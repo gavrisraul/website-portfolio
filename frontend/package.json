@@ -1,5 +1,5 @@
 {
-  "name": "website-ui",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,6 +15,7 @@
     "disqus-react": "^1.0.7",
     "htmr": "^0.8.8",
     "jquery": "^3.4.1",
+    "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-loading-screen": "0.0.17",
@@ -25,8 +26,7 @@
     "react-scripts": "3.3.1",
     "react-syntax-highlighter": "^12.2.1",
     "reactstrap": "^8.4.1",
-    "save": "^2.4.0",
-    "styled-components": "^5.0.1"
+    "save": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Home from './Components/Home';
-import About from './Components/About';
-import Blog from './Components/Blog';
-import Portfolio from './Components/Portfolio';
-import Contact from './Components/Contact';
-import Destroy from './Components/Destroy';
-import BlogPost from './Components/BlogPost';
+import Home from './components/Home';
+import About from './components/About';
+import Blog from './components/Blog';
+import Portfolio from './components/Portfolio';
+import Contact from './components/Contact';
+import Destroy from './components/Destroy';
+import BlogPost from './components/BlogPost';
 
 
 const BaseRouter = () => (

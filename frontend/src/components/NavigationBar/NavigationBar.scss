@@ -1,0 +1,63 @@
+@import '../../styles/variables';
+
+.nav-bar {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-auto-columns: minmax(120px, 120px);
+  grid-gap: 10px;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3%;
+  margin-top: 10px;
+}
+
+.link-nav {
+    font-size: 20px;
+    width: 100%;
+    border: 1px solid $color2;
+    background: $color3;
+    height: 30px;
+    transition: .5s;
+    opacity: .7;
+}
+  
+.link-nav:hover {
+  background: $color5;
+  transform: scale(1.05);
+  border: 1px solid $color4;
+  opacity: .9;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.active {
+  background: $color5;
+  opacity: .9;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+  
+.inactive {
+  background: $color3;
+}
+
+.text-nav {
+  margin-top: 3px;
+}
+
+@media screen and (max-width: 1370px) {
+  .nav-bar {
+    max-width: 80%;
+  }
+}
+  
+@media screen and (max-width: 367px) {
+  .nav-bar{
+    max-width: 95%;
+  }
+}

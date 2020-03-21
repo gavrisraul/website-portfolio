@@ -1,5 +1,5 @@
 # FROM node:apline
-# COPY ./frontend/website-ui/build/*  /var/www/website
+# COPY ./frontend/build/*  /var/www/website
 
 FROM node:13.8.0-alpine as build
 

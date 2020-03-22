@@ -8,6 +8,7 @@ import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 import Destroy from './components/Destroy';
 import BlogPost from './components/BlogPost';
+import MindMapCustom from './components/MindMapCustom';
 
 
 const BaseRouter = () => (
@@ -20,6 +21,7 @@ const BaseRouter = () => (
             <Route exact path='/contact' component={Contact} />
             <Route exact path='/destroy' component={Destroy} />
             <Route exact path='/post/:id' component={BlogPost} />
+            <Route exact path='/mindmap' component={MindMapCustom} />
             <Route path='/' render={() => <div>404 not found</div>} />
         </Switch>
     </div>

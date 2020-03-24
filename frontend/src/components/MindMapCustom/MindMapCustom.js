@@ -178,6 +178,7 @@ let dataGeneral = {
                         {name: 'Version control system'},
                         {name: 'bash script'},
                         {name: 'Security'},
+                        {name: 'Jenkins'}
                     ]
                 },
             ]

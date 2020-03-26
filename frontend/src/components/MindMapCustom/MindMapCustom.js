@@ -166,6 +166,7 @@ let dataGeneral = {
                     children: [
                         {name: 'Nginx'},
                         {name: 'Apache'},
+                        {name: 'Jenkins'},
                         {name: 'Request'},
                         {name: 'Response'},
                         {name: 'TCP/IP'},
@@ -178,9 +179,15 @@ let dataGeneral = {
                         {name: 'Version control system'},
                         {name: 'bash script'},
                         {name: 'Security'},
-                        {name: 'Jenkins'}
                     ]
                 },
+                {
+                    name: 'Orchestration',
+                    children: [
+                        {name: 'Docker'},
+                        {name: 'Kubernetes'}
+                    ]
+                }
             ]
         },
         {
@@ -206,8 +213,8 @@ let dataGeneral = {
                 {
                     name: 'Physics',
                     children: [
-                        {name: 'Mechanics'},
-                        {name: 'Fluids'},
+                        {name: 'Mechanics (Newtonian)'},
+                        {name: 'Fluids (Mechanics)'},
                     ]
                 },
             ]
@@ -216,7 +223,8 @@ let dataGeneral = {
             name: 'Game Development',
             children: [
                 {name: 'Unity'},
-                {name: 'Unreal'}
+                {name: 'Unreal'},
+                {name: 'Apply Physics, Mathematics in games'}
             ]
         },
         {

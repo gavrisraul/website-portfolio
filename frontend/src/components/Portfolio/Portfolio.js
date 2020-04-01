@@ -41,16 +41,16 @@ class Portfolio extends React.Component {
                 />
                 <NavigationBar />
                 <div className="content">
-                    <a className="porfolio-item-one" href="https://github.com/raulgavris/website-portfolio"><div className="text-item">Website-Portfolio</div></a>
-                    <a className="porfolio-item-two" href="https://github.com/raulgavris/dotfiles"><div className="text-item">vim(neovim)<br/>/zsh</div></a>
+                    <a className="porfolio-item-one" href="https://github.com/raulgavris/website-portfolio"><div className="text-item">Website Portfolio</div></a>
+                    <a className="porfolio-item-two" href="https://github.com/raulgavris/dotfiles"><div className="text-item">vim (neovim) / zsh <br/>(Developer tools)</div></a>
                     <a className="porfolio-item-three" href="https://github.com/raulgavris/rg.ai"><div className="text-item">Arch Linux Cutomization</div></a>
-                    <a className="porfolio-item-four" href="/">four</a>
-                    <a className="porfolio-item-five" href="/">five</a>
-                    <a className="porfolio-item-six" href="/">six</a>
-                    <a className="porfolio-item-seven" href="/">seven</a>
-                    <a className="porfolio-item-eight" href="/">eight</a>
-                    <a className="porfolio-item-nine" href="/">nine</a>
-                    <a className="porfolio-item-ten" href="/">ten</a>
+                    <a className="porfolio-item-four" href="/portfolio"><div className="text-item">Sorting algorithms visualization</div></a>
+                    <a className="porfolio-item-five" href="/portfolio"><div className="text-item">Path finding algorithm visualization</div></a>
+                    <a className="porfolio-item-six" href="/portfolio"><div className="text-item">Javascript games</div></a>
+                    <a className="porfolio-item-seven" href="/portfolio"><div className="text-item">Unity engine games</div></a>
+                    <a className="porfolio-item-eight" href="/portfolio"><div className="text-item">AI made in p5js</div></a>
+                    <a className="porfolio-item-nine" href="/portfolio"><div className="text-item">Programming language implementation</div></a>
+                    <a className="porfolio-item-ten" href="/portfolio"><div className="text-item">Linux distro implementation</div></a>
                 </div>
                 <h5 className="trademarks">{this.state.hero.trademarks}</h5>
             </div>

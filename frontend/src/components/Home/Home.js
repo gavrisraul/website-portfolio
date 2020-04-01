@@ -31,7 +31,7 @@ class Home extends React.Component {
             facebook: {},
             instagram: {},
             resume: {},
-            quote: '"I work hard everyday." - Logic',
+            quote: 'mood - "Can\'t stop! Won\'t stop!"',
             loaded: false,
         }
         this.timer = undefined;
@@ -42,7 +42,9 @@ class Home extends React.Component {
             '"Your limitation, it’s only your imagination."',
             '"Great things never come from comfort zones."',
             '"The harder you work for something, the greater you’ll feel when you achieve it."',
-            '"Learn something new everyday."'
+            '"Learn something new everyday."',
+            '"I will not stop until I master everything in the field of computer science and mathematics."',
+            'mood - "Can\'t stop! Won\'t stop!"'
         ];
     }
 

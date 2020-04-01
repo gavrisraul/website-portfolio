@@ -41,16 +41,16 @@ class Portfolio extends React.Component {
                 />
                 <NavigationBar />
                 <div className="content">
-                    <div className="porfolio-item-one">one</div>
-                    <div className="porfolio-item-two">two</div>
-                    <div className="porfolio-item-three">three</div>
-                    <div className="porfolio-item-four">four</div>
-                    <div className="porfolio-item-five">five</div>
-                    <div className="porfolio-item-six">six</div>
-                    <div className="porfolio-item-seven">seven</div>
-                    <div className="porfolio-item-eight">eight</div>
-                    <div className="porfolio-item-nine">nine</div>
-                    <div className="porfolio-item-ten">ten</div>
+                    <a className="porfolio-item-one" href="https://github.com/raulgavris/website-portfolio"><div className="text-item">Website-Portfolio</div></a>
+                    <a className="porfolio-item-two" href="https://github.com/raulgavris/dotfiles"><div className="text-item">vim(neovim)<br/>/zsh</div></a>
+                    <a className="porfolio-item-three" href="https://github.com/raulgavris/rg.ai"><div className="text-item">Arch Linux Cutomization</div></a>
+                    <a className="porfolio-item-four" href="/">four</a>
+                    <a className="porfolio-item-five" href="/">five</a>
+                    <a className="porfolio-item-six" href="/">six</a>
+                    <a className="porfolio-item-seven" href="/">seven</a>
+                    <a className="porfolio-item-eight" href="/">eight</a>
+                    <a className="porfolio-item-nine" href="/">nine</a>
+                    <a className="porfolio-item-ten" href="/">ten</a>
                 </div>
                 <h5 className="trademarks">{this.state.hero.trademarks}</h5>
             </div>

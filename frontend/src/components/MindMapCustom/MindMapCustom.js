@@ -234,6 +234,13 @@ let dataGeneral = {
                 {name: 'Android'},
                 {name: '...React Native'}
             ]
+        },
+        {
+            name: 'Artificial Inteligence',
+            children: [
+                {name: 'Machine Learning'},
+                {name: 'Deep Learning'},
+            ]
         }
     ]
 };

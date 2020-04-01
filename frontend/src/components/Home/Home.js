@@ -42,6 +42,7 @@ class Home extends React.Component {
             '"Your limitation, it’s only your imagination."',
             '"Great things never come from comfort zones."',
             '"The harder you work for something, the greater you’ll feel when you achieve it."',
+            '"Learn something new everyday."'
         ];
     }
 

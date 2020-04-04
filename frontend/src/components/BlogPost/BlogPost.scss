@@ -50,6 +50,15 @@
     color: $color3;
 }
 
+.img-post {
+    width: 100%;
+    transition: .5s;
+    &:hover {
+        border: 2px solid $color4;
+        width: 800px;
+    }
+}
+
 .title {
     margin-top: 50px;
     margin-bottom: 50px;

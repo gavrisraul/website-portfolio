@@ -1,5 +1,7 @@
 <div id="Introduction" class="goHere">
 
+5 mins read.
+
 ----
 # First Blog Post
 ## Hello world!
@@ -23,7 +25,7 @@ This was my first ever program I wrote back in 6th grade of school.
 After my introduction to programming using the pseudocode I went to C/C++.  
 
 
-Then I saw what the power of the computer is.
+Then I realized what the power of the computer is.
 
 First of all, I would like to say that I love to code and to see how the code I write slowly transforms into an application that can 
 help with the automation of tasks or simply to code just for fun.  

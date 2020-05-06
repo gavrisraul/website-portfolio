@@ -11,7 +11,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import CodeBlock from '../CodeBlock';
 
 
-// import Post2 from '../ComponentsMD/Post2.md'; // for development purposese
+// import Post2 from '../../componentsMD/Post2.md'; // for development purposese
 
 import styles from '../../styles/variables.scss';
 
@@ -99,12 +99,11 @@ class BlogPost extends React.PureComponent {
         return summary;
     }
 
-    // componentWillMount() {
-    //     fetch(Post2).then(res => res.text()).then(text => this.setState({ markdown: text }));
-    // }
-
     componentDidMount() {
         const { match: { params } } = this.props;
+
+        // fetch(Post2).then(res => res.text()).then(text => this.setState({ markdown: text })); // dev purposes
+
         axios.get('http://127.0.0.1:8000/api/hero/')
             .then(res => {
                 this.setState({

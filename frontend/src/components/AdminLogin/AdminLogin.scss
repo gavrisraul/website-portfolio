@@ -1,0 +1,149 @@
+@import '../../styles/variables';
+
+
+.login-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: $color8;
+}
+
+.login {
+    // position: absolute;
+    width: 50%;
+    height: 60%;
+    background: $color6;
+    color: $color7;
+    z-index: -999;
+    transform: translate(50%, 25%);
+    border: 5px double $color1;
+}
+
+Form {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+
+.formgroup-login {
+  width : 500px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.label-login {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 3%;
+  color: $color3;
+}
+
+.input-login {
+  width: 200px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid $color5;
+  resize: none;
+  font-size: 20px;
+  font-family: 'VT323', sans-serif;
+  color: $color3;
+  text-align: center;
+}
+
+.input-login:focus {
+    width: 240px;
+    border: 2px solid $color2;
+}
+
+.submit-login {
+  height: 40px;
+  width: 150px;
+  background: transparent;
+  border: 2px solid $color5;
+  transition: .3s;
+  opacity: .6;
+  font-size: 20px;
+  font-family: 'Ubuntu Mono', monospace;
+  color: $color3;
+}
+
+.submit-login:hover {
+  cursor: pointer;
+}
+
+.submit-login:focus {
+  background: $color4;
+  width: 202px;
+  border: 2px solid $color8;
+  opacity: 0.8;
+  color: $color7;
+}
+
+.submit-login:active {
+  transform: scale(0.9);
+}
+
+.contact-title-login {
+  font-size: 30px;
+}
+
+.forbidden {
+    color: $color5;
+    margin-bottom: 10%;
+}
+
+.icon-login {
+    color: $color7;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.login-home {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: $color7;
+    font-size: 17px;
+    border: 2px solid $color5;
+    width: 250px;
+    height: 20px;
+    transition: .5s;
+}
+
+.login-home:hover {
+    cursor: pointer;
+    border-radius: 24px;
+    transform: translate(-20px);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+@media screen and (max-width: 800px) {
+    .login {
+        transform: translate(25%, 25%);
+    }
+}
+
+@media screen and (max-width: 430px) {
+  Form {
+    width: 300px;
+  }
+  .formgroup-login {
+    width: 300px;
+  }
+  .contact-title  {
+    margin-bottom: 15%;
+    font-size: 45px;
+  }
+}

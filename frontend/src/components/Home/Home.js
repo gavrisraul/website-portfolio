@@ -103,7 +103,7 @@ class Home extends React.Component {
                     backgroundImage: "url(" + this.state.hero.hero_image + ")",
                 }} className="hero"><Link to="/about"><div className="hero-link"></div></Link></div>
                 <Link to="/mindmap"><div className="hero-name">{this.state.hero.surname} {this.state.hero.name}</div></Link>
-                <div className="hero-profession">{this.state.hero.hero_profession}</div>
+                <a className="container-icon" href="/admin-login"><div className="hero-profession">{this.state.hero.hero_profession}</div></a>
                 <div className="hero-resume"><a href={this.state.resume.url}>{this.state.hero.resume_label}</a></div>
                 <hr />
                 <div className="container">

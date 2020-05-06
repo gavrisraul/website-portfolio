@@ -128,7 +128,7 @@ class Contact extends React.Component {
                 <CustomNotification ref={this.customNotification}/>
                 <NavigationBar />
                 <Form onSubmit={this.handleSubmit}>
-                    <h1 className="contact-title ">Contact me!</h1>
+                    <h1 className="contact-title">Contact me!</h1>
                     <FormGroup className="formgroup">
                         <Label for="name" className="label">Your Name</Label>
                         <Input

@@ -38,3 +38,5 @@ export LANGUAGE=ro_RO.utf8
 export LC_ALL=ro_RO.utf8
 
 Exit the shell and restart the container -> docker restart container_id
+
+update post set text=LOAD_FILE('/var/lib/mysql-files/Post2.md') where id=2;

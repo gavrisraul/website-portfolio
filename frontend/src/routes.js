@@ -9,6 +9,8 @@ import Contact from './components/Contact';
 import Destroy from './components/Destroy';
 import BlogPost from './components/BlogPost';
 import MindMapCustom from './components/MindMapCustom';
+import AdminLogin from './components/AdminLogin';
+import Admin from './components/Admin';
 
 
 const BaseRouter = () => (
@@ -22,6 +24,8 @@ const BaseRouter = () => (
             <Route exact path='/destroy' component={Destroy} />
             <Route exact path='/post/:id' component={BlogPost} />
             <Route exact path='/mindmap' component={MindMapCustom} />
+            <Route exact path='/admin-login' component={AdminLogin} />
+            <Route exact path='/admin' component={Admin} />
             <Route path='/' render={() => <div>404 not found</div>} />
         </Switch>
     </div>

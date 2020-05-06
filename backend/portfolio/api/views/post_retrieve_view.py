@@ -13,9 +13,16 @@ class PostRetrieveView(RetrieveAPIView):
     serializer_class = PostSerializerRetrieve
 
 
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
     def post(self, request, pk):
-        client_ip = requests.get('https://jsonip.com')
-        client_ip = json.loads(client_ip.text)['ip']
+        client_ip = self.get_client_ip(request)
 
         cursor = connection.cursor()
         cursor.execute(f"SELECT * FROM website.postlikes where post_liked='{pk}' and client_ip='{client_ip}'")

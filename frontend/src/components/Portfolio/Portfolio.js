@@ -16,7 +16,7 @@ class Portfolio extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/hero/')
+        axios.get('https://api.raulgavris.com/hero/')
         .then(res => {
             this.setState({
                 hero: res.data[0],

@@ -171,3 +171,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny'
     ]
 }
+
+#SECURE_SSL_REDIRECT = True

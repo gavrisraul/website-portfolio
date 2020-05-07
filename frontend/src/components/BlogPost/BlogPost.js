@@ -61,7 +61,7 @@ class BlogPost extends React.PureComponent {
         likes = likes + 1;
         likes = String(likes)
         const { match: { params } } = this.props;
-        await axios.post(`http://127.0.0.1:8000/api/post/${params.id}/`, {
+        await axios.post(`https://api.raulgavris.com/post/${params.id}/`, {
             likes
         }).then((data) => {
             if ( data.request.status === 200 ) {
@@ -104,13 +104,13 @@ class BlogPost extends React.PureComponent {
 
         // fetch(Post2).then(res => res.text()).then(text => this.setState({ markdown: text })); // dev purposes
 
-        axios.get('http://127.0.0.1:8000/api/hero/')
+        axios.get('https://api.raulgavris.com/hero/')
             .then(res => {
                 this.setState({
                     hero: res.data[0],
                 })
             })
-        axios.get(`http://127.0.0.1:8000/api/post/${params.id}/`)
+        axios.get(`https://api.raulgavris.com/post/${params.id}/`)
             .then(res => {
                 this.setState({
                     post: res.data,

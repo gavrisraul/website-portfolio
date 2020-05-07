@@ -77,7 +77,7 @@ class Contact extends React.Component {
         }
 
         if (this.state.can_send === true) {
-            await axios.post('http://127.0.0.1:8000/api/send_email/', {
+            await axios.post('https://api.raulgavris.com/send_email/', {
                 name, email, message, subject, client_ip, count
             }).then((data) => {
                 // console.log(data, form);
@@ -90,13 +90,13 @@ class Contact extends React.Component {
 
     componentDidMount() {
         // const { match: { params } } = this.props;
-        axios.get('http://127.0.0.1:8000/api/send_email/')
+        axios.get('https://api.raulgavris.com/send_email/')
             .then(res => {
                 this.setState({
                     email_config: JSON.parse(res.data),
                 })
             })
-        axios.get('http://127.0.0.1:8000/api/hero/')
+        axios.get('https://api.raulgavris.com/hero/')
             .then(res => {
                 this.setState({
                     hero: res.data[0],

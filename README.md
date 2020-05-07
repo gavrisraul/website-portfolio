@@ -12,7 +12,7 @@ http://127.0.0.1:8000/api/send_email/
 http://127.0.0.1:8000/api/send_email/
 http://127.0.0.1:8000/api/links/
 
-find . -type f -name "*.js" -print0 | xargs -0 sed -i '' -e 's/http\:\/\/127\.0\.0\.1\:8000/http\:\/\/162\.22\.21\.118\:8000/g'
+find . -type f -name "*.js" -print0 | xargs -0 sed -i '' -e 's/http\:\/\/127\.0\.0\.1\:8000\/api/https\:\/\/api\.raulgavris\.com/g'
 
 
 include these in /etc/mysql/my.cnf

@@ -1,8 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
 import Tree from 'react-tree-graph';
+import { connect } from 'react-redux';
+
+import { getHeroRequest } from '../../redux';
 import 'react-tree-graph/dist/style.css'
 
 import styles from '../../styles/variables.scss';
@@ -250,7 +252,6 @@ class MindMapCustom extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hero: {},
             loaded: false,
         };
 
@@ -258,20 +259,18 @@ class MindMapCustom extends React.Component {
     
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/api/hero/')
-        .then(res => {
+        this.props.dispatch(getHeroRequest());
+
+        setTimeout(() => {
             this.setState({
-                hero: res.data[0],
+                loaded: this.props.loaded
             })
-        })
-        .then(setTimeout(() => {
-            this.setState({loaded: true})
-        }, 500))
+        }, 500)
     }
 
     render() {
-        return (
-            <div>
+        if (this.state.loaded === false) {
+            return (
                 <LoadingScreen
                     loading={!this.state.loaded}
                     bgColor={styles.color1}
@@ -281,7 +280,10 @@ class MindMapCustom extends React.Component {
                     text='Loading...'
                     children=''
                 />
-
+            )
+        }
+        return (
+            <div>
                 <div className="custom-container">
                     <Tree
                         data={dataGeneral}
@@ -294,10 +296,24 @@ class MindMapCustom extends React.Component {
                     />
                 </div>
                 <Link to='/'><button className="back-button">Go to Home</button></Link>
-                <h5 className="trademarks">{this.state.hero.trademarks}</h5>
+                <h5 className="trademarks">{this.props.hero.trademarks}</h5>
             </div>
         );
     };
 }
 
-export default MindMapCustom;
+const mapStateToProps = state => {
+    return {
+        hero: state.heroReducer.hero,
+        loaded: state.heroReducer.hero.loaded,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getHeroDispatch: () => dispatch(getHeroRequest()),
+        dispatch
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MindMapCustom);

@@ -50,7 +50,7 @@ class Contact extends React.Component {
         let {name, email, message, subject, count} = this.state;
 
         let reset_count = false;
-        if (this.props.email_config.email_config[0].length > 0) {
+        if (this.props.email_config.email_config.length > 0) {
             if ((count_bk + count >= 2) && (client_ip_bk === client_ip)) {
                 this.state.can_send = false;
             }

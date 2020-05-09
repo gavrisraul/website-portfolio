@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import LoadingScreen from 'react-loading-screen';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -9,6 +8,9 @@ import Disqus from 'disqus-react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import CodeBlock from '../CodeBlock';
+
+import { connect } from 'react-redux';
+import { getHeroRequest, getPostRequest, postPostRequest } from '../../redux';
 
 
 // import Post2 from '../../componentsMD/Post2.md'; // for development purposese
@@ -43,44 +45,16 @@ class BlogPost extends React.PureComponent {
         super();
         this.state = {
             markdown: '',
-            hero: {},
-            post: {},
             loaded: false,
-            alreadyLiked: '',
-        };
-        this.disqusShortname = 'raulgavris-com';
-        this.disqusConfig = {
-            url: "http://localhost:3000",
-            identifier: this.state.post.id,
-            title: this.state.post.title,
         };
     }
 
-    async handleSubmit() {
-        let likes = parseInt(this.state.post.likes);
+    handleSubmit() {
+        let likes = parseInt(this.props.post.likes);
         likes = likes + 1;
-        likes = String(likes)
+        likes = String(likes);
         const { match: { params } } = this.props;
-        await axios.post(`https://api.raulgavris.com/post/${params.id}/`, {
-            likes
-        }).then((data) => {
-            if ( data.request.status === 200 ) {
-                this.setState(prevState => ({
-                    post: {
-                        ...prevState.post,
-                        likes: likes,
-                    },
-                    alreadyLiked: 'Thanks!',
-
-                }));
-            } else if ( data.request.status === 210 ) {
-                this.setState({
-                    alreadyLiked: 'You already liked!',
-                });
-            }
-        }).catch((err) => {
-            // console.log(err);
-        })
+        this.props.dispatch(postPostRequest(params.id, likes))
     }
 
     getSummary() {
@@ -104,26 +78,19 @@ class BlogPost extends React.PureComponent {
 
         // fetch(Post2).then(res => res.text()).then(text => this.setState({ markdown: text })); // dev purposes
 
-        axios.get('https://api.raulgavris.com/hero/')
-            .then(res => {
-                this.setState({
-                    hero: res.data[0],
-                })
+        this.props.dispatch(getHeroRequest());
+        this.props.dispatch(getPostRequest(params.id));
+
+        setTimeout(() => {
+            this.setState({
+                loaded: this.props.loaded,
             })
-        axios.get(`https://api.raulgavris.com/post/${params.id}/`)
-            .then(res => {
-                this.setState({
-                    post: res.data,
-                })
-            })
-            .then(setTimeout(() => {
-                this.setState({loaded: true})
-            }, 500))
+        }, 500)
     }
 
   render() {
-    return (
-        <div>
+    if (this.state.loaded === false) {
+        return (
             <LoadingScreen
                 loading={!this.state.loaded}
                 bgColor={styles.color1}
@@ -133,16 +100,39 @@ class BlogPost extends React.PureComponent {
                 text='Loading...'
                 children=''
             />
+        )
+    }
+    if ( this.state.loaded === true ) {
+        this.disqusShortname = 'raulgavris-com';
+        this.disqusConfig = {
+            url: "https://raulgavris.com",
+            identifier: String(this.props.post.id),
+            title: this.props.post.title,
+        };
+    }
+
+    let likes = this.props.post.likes;
+    if ( this.props.postLike.alreadyLiked === 'Thanks!') {
+        likes = this.props.postLike.likes;
+    }
+
+    return (
+        <div>
             <div className="summary"> { this.getSummary() } </div>
-            <div className="title">{this.state.post.title}</div>
-            <div className="likes">likes: {this.state.post.likes} {this.state.alreadyLiked} <FontAwesomeIcon onClick={()=>{
-                this.handleSubmit();
-            }} className="like-icon" size="2x" icon={faThumbsUp} /></div>
+            <div className="title">{this.props.post.title}</div>
+            <div className="likes">
+                likes: { likes } { this.props.postLike.alreadyLiked }
+                <br/><br/>
+                <FontAwesomeIcon onClick={()=>{
+                    this.handleSubmit();
+                    document.getElementById("like-icon").style.pointerEvents = "none";
+                }} className="like-icon" id="like-icon" size="2x" icon={faThumbsUp} />
+            </div>
             
             <Link to='/blog'><button className="back-button">Go to posts</button></Link>
             <ReactMarkdown
                 className="blog-post"
-                source={this.state.post.text}
+                source={this.props.post.text}
                 // source={this.state.markdown} //for development purposes
                 renderers={{
                     code: CodeBlock,
@@ -154,7 +144,7 @@ class BlogPost extends React.PureComponent {
 
             <Disqus.DiscussionEmbed shortname={this.disqusShortname} config={this.disqusConfig} />
 
-            <div className="trademarks">{this.state.hero.trademarks}</div>
+            <div className="trademarks">{this.props.hero.trademarks}</div>
         </div>
     );
   }
@@ -164,4 +154,22 @@ ReactMarkdown.propTypes = {
   value: PropTypes.string,
 };
 
-export default BlogPost;
+const mapStateToProps = state => {
+    return {
+        hero: state.heroReducer.hero,
+        post: state.postReducer.post,
+        postLike: state.postReducer.postLike,
+        loaded: state.postReducer.post.loaded,
+    };
+};
+
+const mapDispatchToProps = ( dispatch, id ) => {
+    return {
+        getHeroDispatch: () => dispatch(getHeroRequest()),
+        getPostRequest: () => dispatch(getPostRequest(id)),
+        postPostRequest: () => dispatch(postPostRequest(id)),
+        dispatch
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);

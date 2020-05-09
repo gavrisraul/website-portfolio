@@ -1,7 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import LoadingScreen from 'react-loading-screen';
+
+import { connect } from 'react-redux';
+
+import { getHeroRequest, getSendEmailRequest, postSendEmailRequest, getClientIpRequest } from '../../redux';
 
 import NavigationBar from '../NavigationBar';
 import CustomNotification from '../CustomNotification';
@@ -20,10 +23,7 @@ class Contact extends React.Component {
             email: '',
             message: '',
             subject: '',
-            client_ip:'',
             count: 0,
-            email_config: [],
-            hero: {},
             can_send: true,
             loaded: false,
         };
@@ -38,18 +38,19 @@ class Contact extends React.Component {
 
     async handleSubmit(e) {
         let client_ip_bk, count_bk, date_send_bk;
-        if (this.state.email_config.length > 0) {
-            client_ip_bk = this.state.email_config[0].fields.client_ip;
-            count_bk = this.state.email_config[0].fields.count;
-            date_send_bk = this.state.email_config[0].fields.date_send;
+        if (this.props.email_config.email_config.length > 0) {
+            client_ip_bk = this.props.email_config.email_config[0].fields.client_ip;
+            count_bk = this.props.email_config.email_config[0].fields.count;
+            date_send_bk = this.props.email_config.email_config[0].fields.date_send;
         }
 
         this.setState({count: this.state.count + 1});
 
-        let {name, email, message, subject, client_ip, count} = this.state;
+        let client_ip = this.props.client.clientIp;
+        let {name, email, message, subject, count} = this.state;
 
         let reset_count = false;
-        if (this.state.email_config.length > 0) {
+        if (this.props.email_config.email_config[0].length > 0) {
             if ((count_bk + count >= 2) && (client_ip_bk === client_ip)) {
                 this.state.can_send = false;
             }
@@ -77,45 +78,26 @@ class Contact extends React.Component {
         }
 
         if (this.state.can_send === true) {
-            await axios.post('https://api.raulgavris.com/send_email/', {
-                name, email, message, subject, client_ip, count
-            }).then((data) => {
-                // console.log(data, form);
-            }).catch((err) => {
-                // console.log(err);
-            })
+            this.props.dispatch(postSendEmailRequest(name, email, message, subject, client_ip, count))
         }
         // e.preventDefault();
     }
 
     componentDidMount() {
-        // const { match: { params } } = this.props;
-        axios.get('https://api.raulgavris.com/send_email/')
-            .then(res => {
-                this.setState({
-                    email_config: JSON.parse(res.data),
-                })
+        this.props.dispatch(getHeroRequest());
+        this.props.dispatch(getSendEmailRequest());
+        this.props.dispatch(getClientIpRequest());
+
+        setTimeout(() => {
+            this.setState({
+                loaded: this.props.loaded
             })
-        axios.get('https://api.raulgavris.com/hero/')
-            .then(res => {
-                this.setState({
-                    hero: res.data[0],
-                })
-            })
-        axios.get('https://jsonip.com')
-            .then(res => {
-                this.setState({
-                    client_ip: res.data.ip,
-                });
-            })
-            .then(setTimeout(() => {
-                this.setState({loaded: true})
-            }, 500))
+        }, 500)
     }
 
     render() {
-        return (
-            <div>
+        if (this.state.loaded === false) {
+            return (
                 <LoadingScreen
                     loading={!this.state.loaded}
                     bgColor={styles.color1}
@@ -125,6 +107,10 @@ class Contact extends React.Component {
                     text='Loading...'
                     children=''
                 />
+            )
+        }
+        return (
+            <div>
                 <CustomNotification ref={this.customNotification}/>
                 <NavigationBar />
                 <Form onSubmit={this.handleSubmit}>
@@ -171,10 +157,29 @@ class Contact extends React.Component {
                         this.customNotification.current.handleOnClick();
                     }}>Submit!</Button>
                 </Form>
-            <h5 className="trademarks">{this.state.hero.trademarks}</h5>
+            <h5 className="trademarks">{this.props.hero.trademarks}</h5>
             </div>
         );
     };
 }
 
-export default Contact;
+const mapStateToProps = state => {
+    return {
+        hero: state.heroReducer.hero,
+        loaded: state.heroReducer.hero.loaded,
+        email_config: state.sendEmailReducer.sendEmail,
+        client: state.sendEmailReducer.client,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getHeroDispatch: () => dispatch(getHeroRequest()),
+        getSendEmailRequest: () => dispatch(getSendEmailRequest()),
+        postSendEmailRequest: () => dispatch(postSendEmailRequest()),
+        getClientIpRequest: () => dispatch(getClientIpRequest()),
+        dispatch
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

@@ -1,10 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
 
-import NavigationBar from '../NavigationBar';
+import { connect } from 'react-redux';
+import { getHeroRequest, getPostsRequest } from '../../redux';
 
+import NavigationBar from '../NavigationBar';
 import styles from '../../styles/variables.scss';
 
 import './Blog.scss';
@@ -14,8 +15,6 @@ class Blog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hero: {},
-            posts: [],
             loaded: false,
         }
         this.postsHTML = [];
@@ -26,7 +25,7 @@ class Blog extends React.Component {
             <div>
                 <Link key={element.id + Math.random()} to={`/post/${element.id}`}>
                     <div className="post" key={element.id + Math.random()}>
-                        <img className="blog-img" alt="blog-img" src={element.image} />
+                        <img key={element.id + Math.random()} className="blog-img" alt="blog-img" src={element.image} />
                         <span className="post-id" key={element.id + Math.random()}>{element.id}.
                         </span>{element.title}
                     </div> 
@@ -40,26 +39,19 @@ class Blog extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('https://api.raulgavris.com/hero/')
-        .then(res => {
+        this.props.dispatch(getHeroRequest());
+        this.props.dispatch(getPostsRequest());
+
+        setTimeout(() => {
             this.setState({
-                hero: res.data[0],
+                loaded: this.props.loaded
             })
-        })
-        axios.get('https://api.raulgavris.com/post/')
-            .then(res => {
-                this.setState({
-                    posts: res.data,
-                })
-            })
-            .then(setTimeout(() => {
-                this.setState({loaded: true})
-            }, 500))
+        }, 500)
     }
 
     render() {
-        return (
-            <div>
+        if (this.state.loaded === false) {
+            return (
                 <LoadingScreen
                     loading={!this.state.loaded}
                     bgColor={styles.color1}
@@ -69,14 +61,34 @@ class Blog extends React.Component {
                     text='Loading...'
                     children=''
                 />
+            )
+        }
+        return (
+            <div>
                 <NavigationBar />
                 <div className="box-posts">
-                    {this.getPostsHTML(this.state.posts)}
+                    {this.getPostsHTML(this.props.posts)}
                 </div>
-                <h5 className="trademarks">{this.state.hero.trademarks}</h5>
+                <h5 className="trademarks">{this.props.hero.trademarks}</h5>
             </div>
         );
     };
 }
 
-export default Blog;
+const mapStateToProps = state => {
+    return {
+        hero: state.heroReducer.hero,
+        posts: state.postsReducer.posts.postsArray,
+        loaded: state.postsReducer.posts.loaded,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getHeroDispatch: () => dispatch(getHeroRequest()),
+        getPostsDispatch: () => dispatch(getPostsRequest()),
+        dispatch
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Blog);

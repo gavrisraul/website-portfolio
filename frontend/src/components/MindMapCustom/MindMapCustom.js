@@ -258,7 +258,7 @@ class MindMapCustom extends React.Component {
     
 
     componentDidMount() {
-        axios.get('https://api.raulgavris.com/hero/')
+        axios.get('http://127.0.0.1:8000/api/hero/')
         .then(res => {
             this.setState({
                 hero: res.data[0],

@@ -1,7 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import LoadingScreen from 'react-loading-screen';
+import { connect } from 'react-redux';
+
 import convert from 'htmr';
+
+import { getHeroRequest } from '../../redux';
 
 import NavigationBar from '../NavigationBar';
 
@@ -12,26 +15,22 @@ import './About.scss';
 
 class About extends React.Component {
     state = {
-        hero: {},
         loaded: false,
     }
 
     componentDidMount() {
-        // const { match: { params } } = this.props;
-        axios.get('https://api.raulgavris.com/hero/')
-        .then(res => {
+        this.props.dispatch(getHeroRequest());
+
+        setTimeout(() => {
             this.setState({
-                hero: res.data[0],
+                loaded: true
             })
-        })
-        .then(setTimeout(() => {
-            this.setState({loaded: true})
-        }, 500))
+        }, 500)
     }
 
     render() {
-        return (
-            <div>
+        if (this.state.loaded === false) {
+            return (
                 <LoadingScreen
                     loading={!this.state.loaded}
                     bgColor={styles.color1}
@@ -41,15 +40,34 @@ class About extends React.Component {
                     text='Loading...'
                     children=''
                 />
+            )
+        }
+        return (
+            <div>
                 <NavigationBar />
                 <div style={{
-                    backgroundImage: "url(" + this.state.hero.hero_image + ")",
+                    backgroundImage: "url(" + this.props.hero.hero_image + ")",
                 }} className="hero-img"></div>
-                <div className="hero-description">{ convert(String(this.state.hero.hero_description)) }</div>
-                <h5 className="trademarks">{this.state.hero.trademarks}</h5>
+                <div className="hero-description">{ convert(String(this.props.hero.hero_description)) }</div>
+                <h5 className="trademarks">{this.props.hero.trademarks}</h5>
             </div>
         );
     };
 }
 
-export default About;
+const mapStateToProps = state => {
+    return {
+        hero: state.heroReducer.hero,
+        loaded: state.heroReducer.hero.loaded,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getHeroDispatch: () => dispatch(getHeroRequest()),
+        dispatch
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);
+

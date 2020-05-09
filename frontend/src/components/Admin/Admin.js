@@ -1,7 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
+
+import { connect } from 'react-redux';
+
+import { getHeroRequest } from '../../redux';
 
 import styles from '../../styles/variables.scss';
 
@@ -10,25 +13,22 @@ import './Admin.scss';
 
 class Admin extends React.Component {
     state = {
-        hero: {},
         loaded: false,
     }
 
     componentDidMount() {
-        axios.get('https://api.raulgavris.com/hero/')
-        .then(res => {
+        this.props.dispatch(getHeroRequest());
+
+        setTimeout(() => {
             this.setState({
-                hero: res.data[0],
+                loaded: this.props.loaded
             })
-        })
-        .then(setTimeout(() => {
-            this.setState({loaded: true})
-        }, 500))
+        }, 500)
     }
 
     render() {
-        return (
-            <div>
+        if (this.state.loaded === false) {
+            return (
                 <LoadingScreen
                     loading={!this.state.loaded}
                     bgColor={styles.color1}
@@ -38,11 +38,29 @@ class Admin extends React.Component {
                     text='Loading...'
                     children=''
                 />
+            )
+        }
+        return (
+            <div>
                 404 Not found <br /> <br />Under development
-                <h5 className="trademarks">{this.state.hero.trademarks}</h5>
+                <h5 className="trademarks">{this.props.hero.trademarks}</h5>
             </div>
         );
     };
 }
 
-export default Admin;
+const mapStateToProps = state => {
+    return {
+        hero: state.heroReducer.hero,
+        loaded: state.heroReducer.hero.loaded,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getHeroDispatch: () => dispatch(getHeroRequest()),
+        dispatch
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

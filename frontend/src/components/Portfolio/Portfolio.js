@@ -1,7 +1,10 @@
 import React from 'react';
-import axios from 'axios';
-// import { Link } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
+import { connect } from 'react-redux';
+
+// import { Link } from 'react-router-dom';
+
+import { getHeroRequest } from '../../redux';
 
 import NavigationBar from '../NavigationBar';
 import styles from '../../styles/variables.scss';
@@ -11,25 +14,22 @@ import './Portfolio.scss';
 
 class Portfolio extends React.Component {
     state = {
-        hero: {},
         loaded: false,
     }
 
     componentDidMount() {
-        axios.get('https://api.raulgavris.com/hero/')
-        .then(res => {
+        this.props.dispatch(getHeroRequest());
+
+        setTimeout(() => {
             this.setState({
-                hero: res.data[0],
+                loaded: this.props.loaded
             })
-        })
-        .then(setTimeout(() => {
-            this.setState({loaded: true})
-        }, 500))
+        }, 500)
     }
 
     render() {
-        return (
-            <div>
+        if (this.state.loaded === false) {
+            return (
                 <LoadingScreen
                     loading={!this.state.loaded}
                     bgColor={styles.color1}
@@ -39,6 +39,11 @@ class Portfolio extends React.Component {
                     text='Loading...'
                     children=''
                 />
+            )
+        }
+        return (
+            <div>
+         
                 <NavigationBar />
                 <div className="content">
                     <a className="porfolio-item-one" href="https://github.com/raulgavris/website-portfolio"><div className="text-item">Website-Portfolio</div></a>
@@ -52,10 +57,25 @@ class Portfolio extends React.Component {
                     <a className="porfolio-item-nine" href="/portfolio"><div className="text-item">Programming-language-implementation</div></a>
                     <a className="porfolio-item-ten" href="/portfolio"><div className="text-item">Linux-distro-implementation</div></a>
                 </div>
-                <h5 className="trademarks">{this.state.hero.trademarks}</h5>
+                <h5 className="trademarks">{this.props.hero.trademarks}</h5>
             </div>
         );
     };
 }
 
-export default Portfolio;
+const mapStateToProps = state => {
+    return {
+        hero: state.heroReducer.hero,
+        loaded: state.heroReducer.hero.loaded,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getHeroDispatch: () => dispatch(getHeroRequest()),
+        dispatch
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);
+

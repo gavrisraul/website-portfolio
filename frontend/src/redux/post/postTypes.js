@@ -1,0 +1,6 @@
+export const GET_POST = 'GET_POST';
+export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
+export const GET_POST_FAILURE = 'GET_POST_FAILURE';
+export const POST_POST = 'POST_POST';
+export const POST_POST_SUCCESS = 'POST_POST_SUCCESS';
+export const POST_POST_FAILURE = 'POST_POST_FAILURE';

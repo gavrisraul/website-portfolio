@@ -1,11 +1,13 @@
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLock } from "@fortawesome/free-solid-svg-icons"
 import { faUser } from "@fortawesome/free-solid-svg-icons"
+
+import { getHeroRequest } from '../../redux';
 
 import styles from '../../styles/variables.scss';
 
@@ -14,22 +16,19 @@ import './AdminLogin.scss';
 
 class AdminLogin extends React.Component {
     state = {
-        hero: {},
         loaded: false,
         username: '',
         password: '',
     }
 
     componentDidMount() {
-        axios.get('https://api.raulgavris.com/hero/')
-        .then(res => {
+        this.props.dispatch(getHeroRequest());
+
+        setTimeout(() => {
             this.setState({
-                hero: res.data[0],
+                loaded: this.props.loaded
             })
-        })
-        .then(setTimeout(() => {
-            this.setState({loaded: true})
-        }, 500))
+        }, 500)
     }
 
     handleChange = e => {
@@ -39,7 +38,7 @@ class AdminLogin extends React.Component {
     async handleSubmit(e) {
         console.log("daaaa mergeee");
         // if (this.state.can_send === true) {
-        //     await axios.post('https://api.raulgavris.com/send_email/', {
+        //     await axios.post('http://127.0.0.1:8000/api/send_email/', {
         //         name, email, message, subject, client_ip, count
         //     }).then((data) => {
         //         // console.log(data, form);
@@ -51,8 +50,8 @@ class AdminLogin extends React.Component {
     }
 
     render() {
-        return (
-            <div className="login-wrapper">
+        if (this.state.loaded === false) {
+            return (
                 <LoadingScreen
                     loading={!this.state.loaded}
                     bgColor={styles.color1}
@@ -62,6 +61,10 @@ class AdminLogin extends React.Component {
                     text='Loading...'
                     children=''
                 />
+            )
+        }
+        return (
+            <div className="login-wrapper">
                 <div className="login">
              
                     <Link to="/"><div className="login-home">To Home Page! I'm a coward!</div></Link>
@@ -97,11 +100,26 @@ class AdminLogin extends React.Component {
                         }}>Login!</Button>
                     </Form>
                     
-                    <h5 className="trademarks-login">{this.state.hero.trademarks}</h5>
+                    <h5 className="trademarks-login">{this.props.hero.trademarks}</h5>
                 </div>
             </div>
         );
     };
 }
 
-export default AdminLogin;
+const mapStateToProps = state => {
+    return {
+        hero: state.heroReducer.hero,
+        loaded: state.heroReducer.hero.loaded,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getHeroDispatch: () => dispatch(getHeroRequest()),
+        dispatch
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminLogin);
+

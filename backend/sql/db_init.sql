@@ -22,11 +22,11 @@ INSERT INTO links (id, url, label) VALUES (8, 'https://www.facebook.com/rg.raulg
 INSERT INTO links (id, url, label) VALUES (9, 'https://www.instagram.com/raul_gavris/', 'instagram');
 INSERT INTO links (id, url, label) VALUES (10, 'https://www.youtube.com/channel/UC8zs6y6zyId75_EYzAjgRjA', 'youtube');
 INSERT INTO links (id, url, label) VALUES (11, 'https://docs.google.com/document/d/1cCAD423vpQx2Nx8Bg0oH_kSVi3r2WCmfH6QfNee4EDM', 'resume');
+INSERT INTO links (id, url, label) VALUES (12, '/mindmap', 'Mindmap');
+INSERT INTO links (id, url, label) VALUES (13, '/admin-login', 'AdminLogin');
 
 INSERT INTO post (id, title, text, image, date, likes) VALUES (1, 'Blog Post 1 - Hello World!', 'TBA', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/assets/blog-post-image.png', '2020-2-29', '0');
-
-INSERT INTO post (id, title, text, image, date, likes) VALUES (2, 'Blog Post 2 - Git tutorial', 'TBA', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/assets/blog-post-image.png', '2020-3-10', '0');
-
 UPDATE post SET text=LOAD_FILE('/var/lib/mysql-files/Post1.md') WHERE id=1;
 
+INSERT INTO post (id, title, text, image, date, likes) VALUES (2, 'Blog Post 2 - Git tutorial', 'TBA', 'https://raw.githubusercontent.com/gavrisraul/website-portfolio/master/frontend/assets/blog-post-image.png', '2020-3-10', '0');
 UPDATE post SET text=LOAD_FILE('/var/lib/mysql-files/Post2.md') WHERE id=2;

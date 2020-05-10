@@ -1,23 +1,48 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
 
 import { connect } from 'react-redux';
 
-import { getHeroRequest } from '../../redux';
+import { getHeroRequest, getPostsRequest, postPostRequest } from '../../redux';
 
 import styles from '../../styles/variables.scss';
 
 import './Admin.scss';
 
+import AdminEditOnCancel from './AdminEditOnCancel';
+
 
 class Admin extends React.Component {
-    state = {
-        loaded: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            loaded: false,
+        }
+        this.postsHTML = [];
+    }
+
+    getPostsHTML(rawPosts) {
+        this.postsHTML = rawPosts.map(element =>
+            <div>
+                <Link key={element.id + Math.random()} to={`/post/${element.id}`}>
+                    <div className="post-admin-page" key={element.id + Math.random()}>
+                        <img key={element.id + Math.random()} className="blog-img-admin-page" alt="blog-img-admin-page" src={element.image} />
+                        <span className="post-id-admin-page" key={element.id + Math.random()}>{element.id}.
+                        </span>{element.title}
+                    </div> 
+                </Link>
+                <div key={element.id + Math.random()} className="date-posted-admin-page">{element.date}</div>
+                <div key={element.id + Math.random()} className="likes-blog-admin-page">likes: {element.likes}</div> 
+            </div>
+        );
+
+        return this.postsHTML;
     }
 
     componentDidMount() {
         this.props.dispatch(getHeroRequest());
+        this.props.dispatch(getPostsRequest());
 
         setTimeout(() => {
             this.setState({
@@ -42,7 +67,8 @@ class Admin extends React.Component {
         }
         return (
             <div>
-                404 Not found <br /> <br />Under development
+                <AdminEditOnCancel/>
+                {/* {this.getPostsHTML(this.props.posts)} */}
                 <h5 className="trademarks">{this.props.hero.trademarks}</h5>
             </div>
         );
@@ -52,13 +78,15 @@ class Admin extends React.Component {
 const mapStateToProps = state => {
     return {
         hero: state.heroReducer.hero,
-        loaded: state.heroReducer.hero.loaded,
+        posts: state.postsReducer.posts.postsArray,
+        loaded: state.postsReducer.posts.loaded,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getHeroDispatch: () => dispatch(getHeroRequest()),
+        getPostsDispatch: () => dispatch(getPostsRequest()),
         dispatch
     };
 };

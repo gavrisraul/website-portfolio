@@ -1,4 +1,5 @@
-import axios from 'axios';
+import portfolioApi from '../../services/portfolioApi';
+
 import { GET_HERO, GET_HERO_SUCCESS, GET_HERO_FAILURE } from './heroTypes';
 
 export const getHero = ()  => {
@@ -24,9 +25,9 @@ export const getHeroFailure = error  => {
 export const getHeroRequest = () => {
     return (dispatch) => {
         dispatch(getHero())
-        axios.get('http://127.0.0.1:8000/api/hero/')
+        portfolioApi.getHero()
             .then(response => {
-                const hero = response.data[0]
+                const hero = response[0]
                 dispatch(getHeroSuccess(hero))
             })
             .catch(error => {

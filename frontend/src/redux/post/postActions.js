@@ -1,4 +1,5 @@
-import axios from 'axios';
+import portfolioApi from '../../services/portfolioApi';
+
 import { GET_POST, GET_POST_SUCCESS, GET_POST_FAILURE } from './postTypes';
 import { POST_POST, POST_POST_SUCCESS, POST_POST_FAILURE } from './postTypes';
 
@@ -45,9 +46,9 @@ export const postPostFailure = error  => {
 export const getPostRequest = (id) => {
     return (dispatch) => {
         dispatch(getPost())
-        axios.get(`http://127.0.0.1:8000/api/post/${id}/`)
+        portfolioApi.getPost(String(id))
             .then(response => {
-                const post = response.data
+                const post = response
                 dispatch(getPostSuccess(post))
             })
             .catch(error => {
@@ -60,19 +61,18 @@ export const getPostRequest = (id) => {
 export const postPostRequest = (id, likes) => {
     return (dispatch) => {
         dispatch(postPost())
-        axios.post(`http://127.0.0.1:8000/api/post/${id}/`, {
-            likes
-        }).then(response => {
-            if ( response.request.status === 200 ) {
-                const postLike  = { likes: likes, alreadyLiked: 'Thanks!' }
-                dispatch(postPostSuccess(postLike))
-            } else if ( response.request.status === 210 ) {
-                const postLike = { likes: likes, alreadyLiked: 'You already liked!' }
-                dispatch(postPostSuccess(postLike))
-            }
-        }).catch(error => {
-            const errorMessage = error.message
-            dispatch(postPostFailure(errorMessage))
-        })
-    };
+        portfolioApi.postPost(String(id), {likes})
+            .then(response => {
+                if ( response.status === '200' ) {
+                    const postLike  = { likes: likes, alreadyLiked: 'Thanks!' }
+                    dispatch(postPostSuccess(postLike))
+                } else if ( response.status === '210' ) {
+                    const postLike = { likes: likes, alreadyLiked: 'You already liked!' }
+                    dispatch(postPostSuccess(postLike))
+                }
+            }).catch(error => {
+                const errorMessage = error.message
+                dispatch(postPostFailure(errorMessage))
+            })
+    };  
 };

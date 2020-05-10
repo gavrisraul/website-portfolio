@@ -1,4 +1,5 @@
-import axios from 'axios';
+import portfolioApi from '../../services/portfolioApi';
+
 import { GET_LINKS, GET_LINKS_SUCCESS, GET_LINKS_FAILURE } from './linksTypes';
 
 export const getLinks = ()  => {
@@ -38,9 +39,9 @@ export const getLinksFailure = error  => {
 export const getLinksRequest = () => {
     return (dispatch) => {
         dispatch(getLinks())
-        axios.get('http://127.0.0.1:8000/api/links/')
+        portfolioApi.getLinks()
             .then(response => {
-                const links = response.data
+                const links = response
                 dispatch(getLinksSuccess(links))
             })
             .catch(error => {

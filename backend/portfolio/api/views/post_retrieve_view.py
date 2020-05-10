@@ -36,9 +36,9 @@ class PostRetrieveView(RetrieveAPIView):
 
             cursor.execute(f"INSERT INTO website.postlikes (post_liked, client_ip) values('{pk}', '{client_ip}')")
 
-            data = {'succes': 1}
+            data = {'succes': 1, 'status': '200'}
 
             return Response(data)
         else:
-            data = {'failed': 1, 'message': 'You already liked this article'}
+            data = {'failed': 1, 'message': 'You already liked this article', 'status': '210'}
             return Response(data, status=210)

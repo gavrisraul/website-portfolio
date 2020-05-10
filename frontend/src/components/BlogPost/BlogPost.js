@@ -105,7 +105,7 @@ class BlogPost extends React.PureComponent {
     if ( this.state.loaded === true ) {
         this.disqusShortname = 'raulgavris-com';
         this.disqusConfig = {
-            url: "https://raulgavris.com",
+            url: window.location.href,
             identifier: String(this.props.post.id),
             title: this.props.post.title,
         };

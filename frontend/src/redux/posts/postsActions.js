@@ -1,4 +1,5 @@
-import axios from 'axios';
+import portfolioApi from '../../services/portfolioApi';
+
 import { GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE } from './postsTypes';
 
 export const getPosts = ()  => {
@@ -24,9 +25,9 @@ export const getPostsFailure = error  => {
 export const getPostsRequest = () => {
     return (dispatch) => {
         dispatch(getPosts())
-        axios.get('http://127.0.0.1:8000/api/post/')
+        portfolioApi.getPosts()
             .then(response => {
-                const posts = response.data
+                const posts = response
                 dispatch(getPostsSuccess(posts))
             })
             .catch(error => {

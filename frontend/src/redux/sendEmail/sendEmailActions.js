@@ -1,4 +1,5 @@
-import axios from 'axios';
+import portfolioApi from '../../services/portfolioApi';
+
 import { GET_SEND_EMAIL, GET_SEND_EMAIL_SUCCESS, GET_SEND_EMAIL_FAILURE } from './sendEmailTypes';
 import { POST_SEND_EMAIL, POST_SEND_EMAIL_SUCCESS, POST_SEND_EMAIL_FAILURE } from './sendEmailTypes';
 import { GET_CLIENT_IP, GET_CLIENT_IP_SUCCESS, GET_CLIENT_IP_FAILURE } from './sendEmailTypes';
@@ -66,9 +67,9 @@ export const getClientIpFailure = error  => {
 export const getSendEmailRequest = () => {
     return (dispatch) => {
         dispatch(getSendEmail())
-        axios.get('http://127.0.0.1:8000/api/send_email/')
+        portfolioApi.getSendEmail()
             .then(response => {
-                let emailConfig = JSON.parse(response.data)
+                let emailConfig = JSON.parse(response)
                 dispatch(getSendEmailSuccess(emailConfig))
             })
             .catch(error => {
@@ -81,9 +82,9 @@ export const getSendEmailRequest = () => {
 export const getClientIpRequest = () => {
     return (dispatch) => {
         dispatch(getClientIp())
-        axios.get('https://jsonip.com')
+        portfolioApi.getClientIp()
             .then(response => {
-                let client_ip = response.data.ip
+                let client_ip = response.ip
                 dispatch(getClientIpSuccess(client_ip))
             })
             .catch(error => {
@@ -96,9 +97,8 @@ export const getClientIpRequest = () => {
 export const postSendEmailRequest = (name, email, message, subject, client_ip, count) => {
     return (dispatch) => {
         dispatch(postSendEmail())
-        axios.post('http://127.0.0.1:8000/api/send_email/', {
-                name, email, message, subject, client_ip, count
-            }).then(response => {
+        portfolioApi.postSendEmail({name, email, message, subject, client_ip, count})
+            .then(response => {
                 const email_config = {
                     name: name,
                     email: email,

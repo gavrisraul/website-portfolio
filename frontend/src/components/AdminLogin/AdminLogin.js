@@ -37,16 +37,6 @@ class AdminLogin extends React.Component {
 
     async handleSubmit(e) {
         console.log("daaaa mergeee");
-        // if (this.state.can_send === true) {
-        //     await axios.post('http://127.0.0.1:8000/api/send_email/', {
-        //         name, email, message, subject, client_ip, count
-        //     }).then((data) => {
-        //         // console.log(data, form);
-        //     }).catch((err) => {
-        //         // console.log(err);
-        //     })
-        // }
-        // e.preventDefault();
     }
 
     render() {

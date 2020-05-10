@@ -4,6 +4,12 @@ import LoadingScreen from 'react-loading-screen';
 
 import { connect } from 'react-redux';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons"
+import { faBars } from "@fortawesome/free-solid-svg-icons"
+
+import $ from "jquery";
+
 import { getHeroRequest, getPostsRequest, postPostRequest } from '../../redux';
 
 import styles from '../../styles/variables.scss';
@@ -51,6 +57,15 @@ class Admin extends React.Component {
         }, 500)
     }
 
+    toggleClassFeat() {
+        $('.feat-show').toggleClass("show")
+        $('.first').toggleClass("rotate")
+    }
+    toggleClassServ() {
+        $('.serv-show').toggleClass("show1")
+        $('.second').toggleClass("rotate")
+    }
+
     render() {
         if (this.state.loaded === false) {
             return (
@@ -65,11 +80,52 @@ class Admin extends React.Component {
                 />
             )
         }
+        $('nav ul li').click(function(){
+            $(this).addClass("active").siblings().removeClass("active")
+        })
+
+        $('.btn').click(function(){
+            console.log("merge")
+            $(this).toggleClass("click")
+            $('.sidebar').toggleClass("show")
+        })
         return (
             <div>
-                <AdminEditOnCancel/>
+                <FontAwesomeIcon className="btn" size="2x" icon={faBars} />
+                <nav className="sidebar">
+                    <div className="text">Side Menu</div>
+                    <ul>
+                        <li><a href="#">Dashboard</a></li>
+                        <li>
+                            <a href="#" className="feat-btn" onClick={this.toggleClassFeat}>
+                                Features
+                                <FontAwesomeIcon className="caret-down first" size="1x" icon={faCaretDown} />
+                            </a>
+                            <ul className="feat-show">
+                                <li><a href="#">Pages</a></li>
+                                <li><a href="#">Elements</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" className="serv-btn" onClick={this.toggleClassServ}>
+                                Services
+                                <FontAwesomeIcon className="caret-down second" size="1x" icon={faCaretDown} />
+                            </a>
+                            <ul className="serv-show">
+                                <li><a href="#">App Design</a></li>
+                                <li><a href="#">Web Design</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Portfolio</a></li>
+                        <li><a href="#">Overview</a></li>
+                        <li><a href="#">Shortcuts</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </nav>
+
+                {/* <AdminEditOnCancel postId={1}/> */}
                 {/* {this.getPostsHTML(this.props.posts)} */}
-                <h5 className="trademarks">{this.props.hero.trademarks}</h5>
+                {/* <h5 className="trademarks">{this.props.hero.trademarks}</h5> */}
             </div>
         );
     };

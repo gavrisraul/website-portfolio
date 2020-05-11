@@ -2,16 +2,17 @@
 @import '../../styles/variables';
 
 .input-post-holder-admin-page {
-    width: 100%;
-    height: 100%;
+    width: calc(100% - 250px);
+    height: calc(100% - 100px);
     position: absolute;
 }
 
 .input-post-admin-page {
-    width: 50%;
-    height: 50%;
-    margin-left:auto;
-    margin-right:auto;
+    width: 70%;
+    height: 70%;
+
+    margin-left: 20%;
+    margin-right: auto;
     margin-top: 10%;
     border: 5px double $color2;
     background: $color1;
@@ -21,10 +22,10 @@
 }
 
 .post-change-icon {
+    position: absolute;
     transition: .5s;
     opacity: .5;
-    margin-top: 40px;
-    margin-right: 20px;
+    margin-top: 30px;
 }
 
 .post-change-icon:hover {
@@ -35,6 +36,16 @@
 
 .post-change-icon:active {
     transform: scale(0.8);
+}
+
+.like {
+    position: fixed;
+    margin-left: 35%;
+}
+
+.dislike {
+    position: fixed;
+    margin-left: 40%;
 }
 
 .blog-post {

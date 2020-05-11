@@ -1,25 +1,33 @@
 @import '../../styles/variables';
 
-* {
+.navbar-wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: transparent;
     margin: 0;
     padding: 0;
     user-select: none;
-    color: white;
     box-sizing: border-box;
     font-family: sans-serif;
     text-align: left;
+    color: white;
 }
 
-.sidebar {
+.navbar {
     position: fixed;
     width: 250px;
     height: 100%;
-    left: -250px;
     background: #1b1b1b;
-    transition: left 0.4s ease;
+    left: -250px;
+    transition: 0.4s;
 }
 
-.sidebar .text {
+.show-only-navbar {
+    left: 0;
+}
+
+.navbar-header {
     color: white;
     font-size: 25px;
     font-weight: 600;
@@ -29,24 +37,24 @@
     letter-spacing: 1px;
 }
 
-nav ul {
+.ul-list-item {
     background: #1b1b1b;
     height: 100%;
-    width: 100%; 
+    width: 100%;
     list-style: none;
 }
 
-nav ul li {
+.list-item {
     line-height: 60px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
 }
 
-nav ul li:last-child {
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+.list-item:last-child {
+    border-bottom: 1px solid rgba(255,255,255,1);
 }
 
-nav ul li a {
-    position: relative;
+.list-item-div {
     color: white;
     text-decoration: none;
     font-size: 18px;
@@ -57,79 +65,91 @@ nav ul li a {
     border-left: 3px solid transparent;
 }
 
-nav ul li.active a {
+.active-panel {
     color: cyan;
+    width: 85%;
     background: #1e1e1e;
     border-left-color: cyan;
 }
 
-nav ul ul {
+.ul-list-item-inside {
     position: static;
     display: none;
+    cursor: pointer;
 }
 
-nav ul .feat-show.show {
+.show {
     display: block;
 }
 
-nav ul .serv-show.show1 {
-    display: block;
-}
-
-nav ul ul li {
+.list-item-inside {
     line-height: 42px;
     border-bottom: none;
 }
 
-nav ul ul li a {
+.list-item-div-inside {
     font-size: 17px;
     color: #e6e6e6;
     padding-left: 80px;
+    transition: 0.1s ease;
 }
 
-nav ul li.active a ul li a {
-    color: #e6e6e6;
-    background: #1b1b1b;
-    border-left-color: transparent;
-}
-
-nav ul ul li a:hover {
+.list-item-div-inside:hover {
     color: cyan;
-    background: #1b1b1b;
+    background: #1e1e1e;
 }
 
 .caret-down {
     position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
     font-size: 22px;
-    transition: transform 0.4s;
+    right: 20px;
+    margin-top: 20px;
+    transition: transform 0.4s ease;
 }
 
-nav ul li a .caret-down.rotate {
-    transform: translateY(-50%) rotate(-180deg);
+.rotate {
+    transform: rotateZ(-180deg); 
 }
 
-.btn {
-    font-size: 100px;
+.hide-navbar {
     position: absolute;
     top: 15px;
-    left: 45px;
-    background: #1b1b1b;
-    border-radius: 3px;
+    left: 15px;
+    font-size: 40px;
+    color: $color1;
     cursor: pointer;
-    transition: left 0.4s ease;
+    transition: 0.4s;
 }
 
-.btn.click {
+.hide-navbar:hover {
+    transform: scale(1.2);
+}
+
+.click-hide-navbar {
     left: 260px;
 }
 
-.btn.click:before {
-    content: '\f00d';
+.top-bar {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    top: 0;
+    background: #1b1b1b;
 }
 
-.sidebar.show {
-    left: 0;
+.top-bar-header {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.now-component {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: calc(100% - 250px);
+    height: calc(100% - 100px);
+    background: $color1;
+    overflow: auto;
+    color: $color4;
 }

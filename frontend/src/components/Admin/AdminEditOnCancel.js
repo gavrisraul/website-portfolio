@@ -76,8 +76,8 @@ class AdminEditOnCancel extends React.Component {
                     ref="theTextInput"
                 />
                 <br/>
-                <FontAwesomeIcon className="post-change-icon" onClick={this.updateComponentValue} size="3x" icon={faThumbsUp} />
-                <FontAwesomeIcon className="post-change-icon" onClick={this.changeEditMode} size="3x" icon={faThumbsDown} />
+                <FontAwesomeIcon className="post-change-icon like" onClick={this.updateComponentValue} size="3x" icon={faThumbsUp} />
+                <FontAwesomeIcon className="post-change-icon dislike" onClick={this.changeEditMode} size="3x" icon={faThumbsDown} />
             </div>
             :
             <div onDoubleClick={this.changeEditMode}>

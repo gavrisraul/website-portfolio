@@ -24,6 +24,9 @@ class Admin extends React.Component {
         super(props);
         this.state = {
             loaded: false,
+            dashboard_active: false,
+            admin_stuff_active: false,
+            hide_navbar_active: true,
         }
         this.postsHTML = [];
     }
@@ -57,13 +60,32 @@ class Admin extends React.Component {
         }, 500)
     }
 
-    toggleClassFeat() {
-        $('.feat-show').toggleClass("show")
-        $('.first').toggleClass("rotate")
+    toggleClassShowFeat = () => {
+        $('.feat-show').toggleClass('show')
+        $('.first').toggleClass('rotate')
+        this.setState({
+            dashboard_active: false,
+            admin_stuff_active: true,
+        })
     }
-    toggleClassServ() {
-        $('.serv-show').toggleClass("show1")
-        $('.second').toggleClass("rotate")
+
+    toggleDashboard = () => {
+        this.setState({
+            dashboard_active: true,
+            admin_stuff_active: false,
+        })
+        $('.first').removeClass('rotate')
+        $('.feat-show').removeClass('show')
+    }
+
+    toggleNavbar = () => {
+        this.setState({
+            hide_navbar_active: !this.state.hide_navbar_active,
+            dashboard_active: false,
+            admin_stuff_active: false,
+        })
+        $('.first').removeClass('rotate')
+        $('.feat-show').removeClass('show')
     }
 
     render() {
@@ -80,52 +102,41 @@ class Admin extends React.Component {
                 />
             )
         }
-        $('nav ul li').click(function(){
-            $(this).addClass("active").siblings().removeClass("active")
-        })
 
-        $('.btn').click(function(){
-            console.log("merge")
-            $(this).toggleClass("click")
-            $('.sidebar').toggleClass("show")
-        })
         return (
-            <div>
-                <FontAwesomeIcon className="btn" size="2x" icon={faBars} />
-                <nav className="sidebar">
-                    <div className="text">Side Menu</div>
-                    <ul>
-                        <li><a href="#">Dashboard</a></li>
-                        <li>
-                            <a href="#" className="feat-btn" onClick={this.toggleClassFeat}>
-                                Features
-                                <FontAwesomeIcon className="caret-down first" size="1x" icon={faCaretDown} />
-                            </a>
-                            <ul className="feat-show">
-                                <li><a href="#">Pages</a></li>
-                                <li><a href="#">Elements</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#" className="serv-btn" onClick={this.toggleClassServ}>
-                                Services
-                                <FontAwesomeIcon className="caret-down second" size="1x" icon={faCaretDown} />
-                            </a>
-                            <ul className="serv-show">
-                                <li><a href="#">App Design</a></li>
-                                <li><a href="#">Web Design</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Portfolio</a></li>
-                        <li><a href="#">Overview</a></li>
-                        <li><a href="#">Shortcuts</a></li>
-                        <li><a href="#">Feedback</a></li>
-                    </ul>
-                </nav>
-
-                {/* <AdminEditOnCancel postId={1}/> */}
-                {/* {this.getPostsHTML(this.props.posts)} */}
-                {/* <h5 className="trademarks">{this.props.hero.trademarks}</h5> */}
+           <div className="navbar-wrapper">
+               <div className="top-bar">
+                    <div className="top-bar-header">Raul Gavriș - Admin Page</div>
+               </div>
+               <FontAwesomeIcon className={this.state.hide_navbar_active ? 'hide-navbar click-hide-navbar' : "hide-navbar"} size="2x" icon={faBars} onClick={this.toggleNavbar} />
+               <div className={this.state.hide_navbar_active ? 'navbar show-only-navbar' : 'navbar'}>
+                   <div className="navbar-header">Admin Page</div>
+                   <div className="ul-list-item">
+                       <div className="list-item">
+                           <div className={this.state.dashboard_active ? 'list-item-div active-panel' : 'list-item-div'} onClick={this.toggleDashboard}>Dashboard</div>
+                        </div>
+                        <div className="list-item">
+                           <div className={this.state.admin_stuff_active ? 'list-item-div active-panel' : 'list-item-div'} onClick={this.toggleClassShowFeat}>
+                               Admin Stuff
+                                <FontAwesomeIcon className="caret-down first" size="2x" icon={faCaretDown} />
+                            </div>
+                            <div className="ul-list-item-inside feat-show">
+                               <div className="list-item-inside">
+                                    <div className="list-item-div-inside">Posts</div>
+                                </div>
+                                <div className="list-item-inside">
+                                    <div className="list-item-div-inside">Portfolio</div>
+                                </div>
+                                <div className="list-item-inside">
+                                    <div className="list-item-div-inside">Emails</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="now-component">
+                    <AdminEditOnCancel postId={1}/>
+                </div>
             </div>
         );
     };

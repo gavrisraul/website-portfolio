@@ -13,5 +13,8 @@ portfolioApi.getLinks = () => client.get('/links/');
 portfolioApi.getSendEmail = () => client.get('/send_email/')
 portfolioApi.postSendEmail = (payload) => client.post('/send_email/', payload);
 portfolioApi.getClientIp = () => client.get('https://jsonip.com');
+portfolioApi.postToken = (payload) => client.post('/token/obtain/', payload);
+
+portfolioApi.setCustomHeaders = (payload) => client.setCustomHeaders(payload);
 
 export default portfolioApi;

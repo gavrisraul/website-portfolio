@@ -13,13 +13,22 @@ import styles from '../../styles/variables.scss';
 
 import './AdminLogin.scss';
 
+import portfolioApi from '../../services/portfolioApi';
+
 
 class AdminLogin extends React.Component {
-    state = {
-        loaded: false,
-        username: '',
-        password: '',
+    constructor(props) {
+        super(props);
+        this.state = {
+            loaded: false,
+            username: '',
+            password: '',
+        };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
+    
 
     componentDidMount() {
         this.props.dispatch(getHeroRequest());
@@ -36,7 +45,21 @@ class AdminLogin extends React.Component {
     }
 
     async handleSubmit(e) {
-        console.log("daaaa mergeee");
+        portfolioApi.postToken({
+            username: this.state.username,
+            password: this.state.password,
+        })
+        .then(response => {
+            portfolioApi.setCustomHeaders({'Authorization': "JWT " + response.access});
+            localStorage.setItem('access_token', response.access);
+            localStorage.setItem('refresh_token', response.refresh);
+            const data = response;
+            return data;
+        })
+        .catch(error => {
+            throw error;
+        })
+
     }
 
     render() {

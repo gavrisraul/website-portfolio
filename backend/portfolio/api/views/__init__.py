@@ -4,3 +4,6 @@ from .post_list_view import PostListView
 from .links_list_view import LinksListView
 from .post_list_view import PostListView
 from .post_retrieve_view import PostRetrieveView
+from .token_obtain_view import ObtainTokenPairWithColorView
+from .user_view import CustomUserCreate
+from .black_list_view import LogoutAndBlacklistRefreshTokenForUserView

@@ -27,3 +27,35 @@ export LANGUAGE=ro_RO.utf8
 export LC_ALL=ro_RO.utf8
 
 Exit the shell and restart the container -> docker restart container_id
+
+
+
+
+
+
+
+
+
+
+
+class App extends Component {
+
+    constructor() {
+        super();
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    async handleLogout() {
+    try {
+        const response = await axiosInstance.post('/blacklist/', {
+            "refresh_token": localStorage.getItem("refresh_token")
+        });
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        axiosInstance.defaults.headers['Authorization'] = null;
+        return response;
+    }
+    catch (e) {
+        console.log(e);
+    }
+};

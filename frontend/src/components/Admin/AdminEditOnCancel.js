@@ -11,7 +11,7 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons"
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons"
 
 import CodeBlock from '../CodeBlock';
-import { getHeroRequest, getPostRequest } from '../../redux';
+import { getPostRequest } from '../../redux';
 
 import styles from '../../styles/variables.scss';
 
@@ -42,7 +42,6 @@ class AdminEditOnCancel extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(getHeroRequest());
         this.props.dispatch(getPostRequest(this.props.postId));
 
         setTimeout(() => {
@@ -100,7 +99,6 @@ ReactMarkdown.propTypes = {
 
 const mapStateToProps = state => {
     return {
-        hero: state.heroReducer.hero,
         post: state.postReducer.post,
         loaded: state.postReducer.post.loaded,
     };
@@ -108,7 +106,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, id) => {
     return {
-        getHeroDispatch: () => dispatch(getHeroRequest()),
         getPostRequest: () => dispatch(getPostRequest(id)),
         dispatch
     };

@@ -69,7 +69,7 @@ export const getSendEmailRequest = () => {
         dispatch(getSendEmail())
         portfolioApi.getSendEmail()
             .then(response => {
-                let emailConfig = JSON.parse(response)
+                let emailConfig = JSON.parse(response.data)
                 dispatch(getSendEmailSuccess(emailConfig))
             })
             .catch(error => {
@@ -84,7 +84,7 @@ export const getClientIpRequest = () => {
         dispatch(getClientIp())
         portfolioApi.getClientIp()
             .then(response => {
-                let client_ip = response.ip
+                let client_ip = response.data.ip
                 dispatch(getClientIpSuccess(client_ip))
             })
             .catch(error => {

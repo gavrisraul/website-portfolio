@@ -27,7 +27,7 @@ export const getHeroRequest = () => {
         dispatch(getHero())
         portfolioApi.getHero()
             .then(response => {
-                const hero = response[0]
+                const hero = response.data[0]
                 dispatch(getHeroSuccess(hero))
             })
             .catch(error => {

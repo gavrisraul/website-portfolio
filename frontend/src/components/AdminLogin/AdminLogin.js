@@ -50,10 +50,10 @@ class AdminLogin extends React.Component {
             password: this.state.password,
         })
         .then(response => {
-            portfolioApi.setCustomHeaders({'Authorization': "JWT " + response.access});
-            localStorage.setItem('access_token', response.access);
-            localStorage.setItem('refresh_token', response.refresh);
-            const data = response;
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
+            const data = response.data;
+            window.location.href = '/admin/'
             return data;
         })
         .catch(error => {

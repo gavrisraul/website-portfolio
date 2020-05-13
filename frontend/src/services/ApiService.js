@@ -6,7 +6,7 @@ const TIMEOUT = 5000;
 const HEADERS = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'JWT' + localStorage.getItem('access_token'),
+  'Authorization': 'JWT ' + localStorage.getItem('access_token'),
 };
 
 class ApiService {
@@ -18,13 +18,11 @@ class ApiService {
       auth,
     });
 
-    client.interceptors.response.use(this.handleSuccess, this.handleError);
     this.client = client;
-  }
-
-  setCustomHeaders (payload) {
-    this.headers = HEADERS;
-    this.headers['Authorization'] = payload['Authorization'];
+    this.post = this.post.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this) 
+    this.handleError = this.handleError.bind(this);
+    client.interceptors.response.use(this.handleSuccess, this.handleError);
   }
 
   handleSuccess(response) {
@@ -36,14 +34,16 @@ class ApiService {
 
     // Prevent infinite loops
     if (error.response.status === 401 && originalRequest.url === API_ROOT+'token/refresh/') {
-        window.location.href = '/login/';
+        window.location.href = '/admin-login/';
         return Promise.reject(error);
     }
 
     if (error.response.data.code === "token_not_valid" && error.response.status === 401 && error.response.statusText === "Unauthorized") {
       const refreshToken = localStorage.getItem('refresh_token');
 
-      if (refreshToken){
+      const bareRefreshToken = refreshToken.replace("JWT ", '');
+
+      if (bareRefreshToken !== 'undefined'){
         const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
 
         // exp date in token is expressed in seconds, while now() returns milliseconds:
@@ -54,12 +54,12 @@ class ApiService {
           return this.client.post('/token/refresh/', {refresh: refreshToken})
                   .then((response) => {
         
-                    localStorage.setItem('access_token', response.access);
-                    localStorage.setItem('refresh_token', response.refresh);
+                    localStorage.setItem('access_token', response.data.access);
+                    localStorage.setItem('refresh_token', response.data.refresh);
         
-                    this.client.defaults.headers['Authorization'] = "JWT " + response.access;
-                    originalRequest.headers['Authorization'] = "JWT " + response.access;
-        
+                    this.client.defaults.headers['Authorization'] = "JWT " + response.data.access;
+                    originalRequest.headers['Authorization'] = "JWT " + response.data.access;
+
                     return this.client(originalRequest);
                   })
                   .catch(err => {
@@ -67,11 +67,11 @@ class ApiService {
                   });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);
-          window.location.href = '/login/';
+          window.location.href = '/admin-login/';
         }
       } else {
         console.log("Refresh token not available.")
-        window.location.href = '/login/';
+        window.location.href = '/admin-login/';
       }
     }
   
@@ -81,27 +81,27 @@ class ApiService {
 
   async get(path) {
     const response = await this.client.get(path);
-    return response.data;
+    return response;
   }
 
   async post(path, payload) {
     const response = await this.client.post(path, payload);
-    return response.data;
+    return response;
   }
 
   async put(path, payload) {
     const response = await this.client.put(path, payload);
-    return response.data;
+    return response;
   }
 
   async patch(path, payload) {
     const response = await this.client.patch(path, payload);
-    return response.data;
+    return response;
   }
 
   async delete(path) {
     const response = await this.client.delete(path);
-    return response.data;
+    return response;
   }
 }
 

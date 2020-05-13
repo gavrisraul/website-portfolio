@@ -41,7 +41,7 @@ export const getLinksRequest = () => {
         dispatch(getLinks())
         portfolioApi.getLinks()
             .then(response => {
-                const links = response
+                const links = response.data
                 dispatch(getLinksSuccess(links))
             })
             .catch(error => {

@@ -3,8 +3,11 @@ import json
 import pytz
 import requests
 from django.utils import timezone
+from django.db import connection
 from django.core.serializers import serialize
 from rest_framework.response import Response
+from rest_framework import permissions
+
 
 from portfolio.models import Email
 from rest_framework.generics import ListAPIView
@@ -12,6 +15,9 @@ from portfolio.api.serializers import EmailSerializerList
 
 
 class EmailListView(ListAPIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+
     queryset = Email.objects.all()
     serializer_class = EmailSerializerList
     email = Email()
@@ -36,7 +42,8 @@ class EmailListView(ListAPIView):
             try:
                 self.email.save()
             except Exception:
-                self.email.update(active=True)
+                cursor = connection.cursor()
+                cursor.execute(f"INSERT IGNORE INTO email VALUES ({self.email.email}, {self.email.name}, {self.email.subject}, {self.email.message}, {self.email.client_ip}, {self.email.count}, {self.email.date_send})")
         from_name = f'From Name: {str(request.data["name"])}'
         msg = str(request.data["message"])
         msg = "\n".join([from_name, msg])

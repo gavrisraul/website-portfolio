@@ -4,3 +4,4 @@ from .links_serializer_list import LinksSerializerList
 from .post_serializer_list import PostSerializerList
 from .post_serializer_retrieve import PostSerializerRetrieve
 from .token_obtain_serializer import MyTokenObtainPairSerializer
+from .portfolio_serializer_list import PortfolioSerializerList

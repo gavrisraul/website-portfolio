@@ -2,6 +2,8 @@ import json
 import requests
 from django.db import connection
 from rest_framework.response import Response
+from rest_framework import permissions
+
 
 from portfolio.models import Post
 from rest_framework.generics import RetrieveAPIView
@@ -9,6 +11,9 @@ from portfolio.api.serializers import PostSerializerRetrieve
 
 
 class PostRetrieveView(RetrieveAPIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+
     queryset = Post.objects.all()
     serializer_class = PostSerializerRetrieve
 

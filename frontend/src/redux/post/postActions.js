@@ -48,7 +48,7 @@ export const getPostRequest = (id) => {
         dispatch(getPost())
         portfolioApi.getPost(String(id))
             .then(response => {
-                const post = response
+                const post = response.data
                 dispatch(getPostSuccess(post))
             })
             .catch(error => {

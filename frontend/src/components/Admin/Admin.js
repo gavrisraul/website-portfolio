@@ -91,7 +91,7 @@ class Admin extends React.Component {
                     <div className="portfolio-id">{element.id}.</div>
                     {element.name}
                 </div>
-                <button id={element.id} onClick={this.updatePortfolio} className="delete-admin">X</button>
+                <button id={element.id} onClick={this.deletePortfolio} className="delete-admin">X</button>
             </div>
         );
 
@@ -180,19 +180,6 @@ class Admin extends React.Component {
             password: sessionStorage.getItem('password'),
             portfolio_id: element.target.id,
             operation: 'delete',
-        })
-        .then(response => {
-            return response.data;
-        })
-    }
-
-    updatePortfolio(element) {
-        portfolioApi.postPortfolioAdmin({
-            username: sessionStorage.getItem('username'),
-            password: sessionStorage.getItem('password'),
-            portfolio_id: element.target.id,
-            name: 'RAUL GAVRIS',
-            operation: 'update',
         })
         .then(response => {
             return response.data;

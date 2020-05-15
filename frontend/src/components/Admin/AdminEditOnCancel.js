@@ -52,6 +52,19 @@ class AdminEditOnCancel extends React.Component {
         }, 500)
     }
 
+    updatePost() {
+        portfolioApi.postPostAdmin({
+            username: sessionStorage.getItem('username'),
+            password: sessionStorage.getItem('password'),
+            post_id: parseInt(this.props.postId),
+            // de completat
+            operation: 'update',
+        })
+        .then(response => {
+            return response.data;
+        })
+    }
+
     render() {
         if (this.state.loaded === false) {
             return (

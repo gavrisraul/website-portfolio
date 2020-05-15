@@ -32,6 +32,21 @@ class PortfolioToEdit extends React.Component {
         }, 500)
     }
 
+    updatePortfolio() {
+        portfolioApi.postPortfolioAdmin({
+            username: sessionStorage.getItem('username'),
+            password: sessionStorage.getItem('password'),
+            portfolio_id: parseInt(this.props.portfolioId) - 1,
+            name: this.state.name,
+            image: this.state.image,
+            description: this.state.description,
+            operation: 'update',
+        })
+        .then(response => {
+            return response.data;
+        })
+    }
+
     render() {
         if (this.state.loaded === false) {
             return (

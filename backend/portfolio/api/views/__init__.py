@@ -9,4 +9,4 @@ from .user_view import CustomUserCreate
 from .black_list_view import LogoutAndBlacklistRefreshTokenForUserView
 from .portfolio_list_view import PortfolioListView
 
-from .admin_view import PortfolioListViewAdmin, PostListViewAdmin, EmailListViewAdmin
+from .admin_view import PortfolioListViewAdmin, PostListViewAdmin, EmailListViewAdmin, DummyView

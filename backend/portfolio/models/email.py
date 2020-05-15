@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Email(models.Model):
-    #  id = models.IntegerField(primary_key=True)
-    email = models.CharField(max_length=50, primary_key=True)
+    id = models.AutoField(primary_key=True)
+    email = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     subject = models.CharField(max_length=50)
     message = models.TextField()

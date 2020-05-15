@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLock } from "@fortawesome/free-solid-svg-icons"
 import { faUser } from "@fortawesome/free-solid-svg-icons"
 
-import { getHeroRequest } from '../../redux';
+import { getHeroRequest, postTokenRequest } from '../../redux';
 
 import styles from '../../styles/variables.scss';
 
@@ -45,21 +45,7 @@ class AdminLogin extends React.Component {
     }
 
     async handleSubmit(e) {
-        portfolioApi.postToken({
-            username: this.state.username,
-            password: this.state.password,
-        })
-        .then(response => {
-            localStorage.setItem('access_token', response.data.access);
-            localStorage.setItem('refresh_token', response.data.refresh);
-            const data = response.data;
-            window.location.href = '/admin/'
-            return data;
-        })
-        .catch(error => {
-            throw error;
-        })
-
+        this.props.dispatch(postTokenRequest(this.state.username, this.state.password));
     }
 
     render() {
@@ -124,15 +110,18 @@ const mapStateToProps = state => {
     return {
         hero: state.heroReducer.hero,
         loaded: state.heroReducer.hero.loaded,
+        access: state.loginReducer.access,
+        refresh: state.loginReducer.refresh
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getHeroDispatch: () => dispatch(getHeroRequest()),
+        postTokenRequest: () => dispatch(postTokenRequest()),
         dispatch
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminLogin));
 

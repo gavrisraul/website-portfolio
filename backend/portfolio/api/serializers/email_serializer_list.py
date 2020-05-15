@@ -6,6 +6,6 @@ class EmailSerializerList(serializers.ModelSerializer):
     class Meta:
         model = Email
         fields = (
-            'name', 'subject', 'email', 'message',
+            'id', 'name', 'subject', 'email', 'message',
             'client_ip', 'count', 'date_send'
         )

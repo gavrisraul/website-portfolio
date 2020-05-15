@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import LoadingScreen from 'react-loading-screen';
 
 import { connect } from 'react-redux';
@@ -10,15 +10,17 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 
 import $ from "jquery";
 
-import { getHeroRequest, getPostsRequest } from '../../redux';
+import { getHeroRequest, blacklistTokenRequest, getPostsAdminRequest, getPortfolioAdminRequest, getEmailAdminRequest } from '../../redux';
 
 import styles from '../../styles/variables.scss';
 
 import './Admin.scss';
 
-import AdminEditOnCancel from './AdminEditOnCancel';
-
 import portfolioApi from '../../services/portfolioApi';
+import AdminEditOnCancel from './AdminEditOnCancel';
+import EmailToView from './EmailToView';
+import PortfolioToEdit from './PortfolioToEdit';
+
 
 class Admin extends React.Component {
     constructor(props) {
@@ -28,14 +30,15 @@ class Admin extends React.Component {
             dashboard_active: true,
             admin_stuff_active: false,
             hide_navbar_active: true,
-            is_authenticated: false,
-            access_token: undefined,
-            refresh_token: undefined,
             quote: 'mood - "Can\'t stop! Won\'t stop!"',
             posts: [],
             posts_active: false,
             portfolio_active: false,
             email_active: false,
+            redirect: 0,
+            post_to_edit: -1,
+            portfolio_to_edit: -1,
+            email_to_view: -1,
         }
         this.timer = undefined;
         this.quotesArray = [
@@ -49,60 +52,183 @@ class Admin extends React.Component {
             '"I will not stop until I master everything in the field of computer science and mathematics."',
             'mood - "Can\'t stop! Won\'t stop!"'
         ];
-        // this.postsHTML = [];
+        this.postsHTML = [];
+        this.portfolioHTML = [];
+        this.emailHTML = [];
+
+        this.getPostToEdit = this.getPostToEdit.bind(this);
+        this.getPortfolioToEdit = this.getPortfolioToEdit.bind(this);
+        this.getEmailToView = this.getEmailToView.bind(this);
     }
 
     getPostsHTML(rawPosts) {
         this.postsHTML = rawPosts.map(element =>
-            <div>
-                <Link key={element.id + Math.random()} to={`/post/${element.id}`}>
-                    <div className="post-admin-page" key={element.id + Math.random()}>
-                        <img key={element.id + Math.random()} className="blog-img-admin-page" alt="blog-img-admin-page" src={element.image} />
-                        <span className="post-id-admin-page" key={element.id + Math.random()}>{element.id}.
-                        </span>{element.title}
-                    </div> 
-                </Link>
-                <div key={element.id + Math.random()} className="date-posted-admin-page">{element.date}</div>
-                <div key={element.id + Math.random()} className="likes-blog-admin-page">likes: {element.likes}</div> 
+            <div className="posts-admin">
+                <img id={element.id} onClick={this.getPostToEdit} className="posts-image" src={element.image} />
+                <div className="posts-title">
+                    <div className="posts-id">{element.id}.</div>
+                    <Link to={`/post/${element.id}`}>
+                        {element.title}
+                    </Link>
+                </div>
+                <div className="posts-date-likes">
+                    <div className="posts-date">date: {element.date}</div>
+                    <div className="posts-likes">likes: {element.likes}</div>
+                </div>
+                <br /> <br />
+                <button id={element.id} onClick={this.deletePost} className="delete-admin">X</button>
             </div>
         );
 
         return this.postsHTML;
     }
 
+    getPortfolioHTML(rawPortfolio) {
+        this.portfolioHTML = rawPortfolio.map(element =>
+            <div className="portfolio-admin">
+                <img id={element.id} onClick={this.getPortfolioToEdit} className="portfolio-image" src={element.portfolio_image} />
+                <div className="portfolio-name">
+                    <div className="portfolio-id">{element.id}.</div>
+                    {element.name}
+                </div>
+                <button id={element.id} onClick={this.updatePortfolio} className="delete-admin">X</button>
+            </div>
+        );
+
+        return this.portfolioHTML;
+    }
+
+    getEmailHTML(rawEmail) {
+        this.emailHTML = rawEmail.map(element =>
+            <div className="email-admin">
+                <div id={element.id} onClick={this.getEmailToView} className="from-email">email: {element.email}</div>
+                <div className="from-name">from: {element.name}</div>
+                <div className="email-subject">subject: {element.subject}</div>
+                <div className="email-datesend">date send: {element.date_send}</div>
+                <button id={element.id} onClick={this.deleteEmail} className="delete-admin">X</button>
+            </div>
+        );
+
+        return this.emailHTML;
+    }
+
+    getPostToEdit(element) {
+        this.setState({
+            post_to_edit: element.target.id,
+            portfolio_to_edit: -1,
+            email_to_view: -1,
+            portfolio_active: false,
+            email_active: false,
+            posts_active: false,
+            dashboard_active: false,
+            admin_stuff_active: false,
+        });
+    }
+
+    getPortfolioToEdit(element) {
+        this.setState({
+            post_to_edit: -1,
+            portfolio_to_edit: element.target.id,
+            email_to_view: -1,
+            portfolio_active: false,
+            email_active: false,
+            posts_active: false,
+            dashboard_active: false,
+            admin_stuff_active: false,
+        });
+    }
+
+    getEmailToView(element) {
+        this.setState({
+            post_to_edit: -1,
+            portfolio_to_edit: -1,
+            email_to_view: element.target.id,
+            portfolio_active: false,
+            email_active: false,
+            posts_active: false,
+            dashboard_active: false,
+            admin_stuff_active: false,
+        });
+    }
+
+    deleteEmail(element) {
+        portfolioApi.postEmailAdmin({
+            username: sessionStorage.getItem('username'),
+            password: sessionStorage.getItem('password'),
+            email_id: element.target.id,
+        })
+        .then(response => {
+            return response.data;
+        })
+    }
+
+    deletePost(element) {
+        portfolioApi.postPostsAdmin({
+            username: sessionStorage.getItem('username'),
+            password: sessionStorage.getItem('password'),
+            post_id: element.target.id,
+            operation: 'delete',
+        })
+        .then(response => {
+            return response.data;
+        })
+    }
+
+    deletePortfolio(element) {
+        portfolioApi.postPortfolioAdmin({
+            username: sessionStorage.getItem('username'),
+            password: sessionStorage.getItem('password'),
+            portfolio_id: element.target.id,
+            operation: 'delete',
+        })
+        .then(response => {
+            return response.data;
+        })
+    }
+
+    updatePortfolio(element) {
+        portfolioApi.postPortfolioAdmin({
+            username: sessionStorage.getItem('username'),
+            password: sessionStorage.getItem('password'),
+            portfolio_id: element.target.id,
+            name: 'RAUL GAVRIS',
+            operation: 'update',
+        })
+        .then(response => {
+            return response.data;
+        })
+    }
+
     componentDidMount() {
-        if (localStorage.getItem('access_token')) {
-            this.setState({
-                access_token: localStorage.getItem('access_token'),
-                refresh_token: localStorage.getItem('refresh_token'),
-            })
-            this.setState({
-                is_authenticated: true,
-            })
-            // this.props.dispatch(getPostsRequest());
-            portfolioApi.getPostsAdmin()
-                .then(response => {
-                    this.setState({
-                        posts: response.data
-                    })
-                })
-            this.props.dispatch(getHeroRequest());
-            this.timer = setInterval(() => {
+        portfolioApi.getCredentials()
+            .then(response => {
                 this.setState({
-                    quote: this.quotesArray[Math.floor(Math.random() * this.quotesArray.length)]
-                });
-            }, 5000);
-            setTimeout(() => {
-                this.setState({
-                    loaded: this.props.loaded
+                    redirect: response.status,
                 })
-            }, 500)
-        }
+            })
+            .then(isLoggedIn => {
+                if (this.state.redirect === 200) {
+                    this.props.dispatch(getHeroRequest());
+                    this.props.dispatch(getPostsAdminRequest());
+                    this.props.dispatch(getPortfolioAdminRequest());
+                    this.props.dispatch(getEmailAdminRequest());
+                    this.timer = setInterval(() => {
+                        this.setState({
+                            quote: this.quotesArray[Math.floor(Math.random() * this.quotesArray.length)]
+                        });
+                    }, 5000);
+                    setTimeout(() => {
+                        this.setState({
+                            loaded: this.props.loaded
+                        })
+                    }, 500)
+                    return isLoggedIn;
+                }
+            })
     }
 
     logOut = () => {
-        localStorage.clear();
-        window.location.href = '/';
+        this.props.dispatch(blacklistTokenRequest());
     }
 
     toggleClassShowFeat = () => {
@@ -114,6 +240,9 @@ class Admin extends React.Component {
             portfolio_active: false,
             email_active: false,
             posts_active: false,
+            post_to_edit: -1,
+            portfolio_to_edit: -1,
+            email_to_view: -1,
         })
     }
 
@@ -124,6 +253,9 @@ class Admin extends React.Component {
             portfolio_active: false,
             email_active: false,
             posts_active: false,
+            post_to_edit: -1,
+            portfolio_to_edit: -1,
+            email_to_view: -1,
         })
         $('.first').removeClass('rotate')
         $('.feat-show').removeClass('show')
@@ -132,8 +264,6 @@ class Admin extends React.Component {
     toggleNavbar = () => {
         this.setState({
             hide_navbar_active: !this.state.hide_navbar_active,
-            // dashboard_active: false,
-            // admin_stuff_active: false,
         })
         $('.first').removeClass('rotate')
         $('.feat-show').removeClass('show')
@@ -144,6 +274,9 @@ class Admin extends React.Component {
             posts_active: true,
             portfolio_active: false,
             email_active: false,
+            post_to_edit: -1,
+            portfolio_to_edit: -1,
+            email_to_view: -1,
         })
     }
 
@@ -152,6 +285,9 @@ class Admin extends React.Component {
             email_active: true,
             posts_active: false,
             portfolio_active: false,
+            post_to_edit: -1,
+            portfolio_to_edit: -1,
+            email_to_view: -1,
         })
     }
 
@@ -160,11 +296,14 @@ class Admin extends React.Component {
             portfolio_active: true,
             email_active: false,
             posts_active: false,
+            post_to_edit: -1,
+            portfolio_to_edit: -1,
+            email_to_view: -1,
         })
     }
 
     render() {
-        if (this.state.loaded === false || this.state.is_authenticated === false) {
+        if (this.state.loaded === false || this.state.redirect !== 200) {
             return (
                 <LoadingScreen
                     loading={!this.state.loaded}
@@ -178,26 +317,26 @@ class Admin extends React.Component {
             )
         }
         return (
-           <div className="navbar-wrapper">
-               <div className="top-bar">
+            <div className="navbar-wrapper">
+                <div className="top-bar">
                     <div className="top-bar-header">Raul Gavriș - Admin Page</div>
                     <button className="logout" onClick={this.logOut}>Log Out</button>
-               </div>
-               <FontAwesomeIcon className={this.state.hide_navbar_active ? 'hide-navbar click-hide-navbar' : "hide-navbar"} size="2x" icon={faBars} onClick={this.toggleNavbar} />
-               <div className={this.state.hide_navbar_active ? 'navbar show-only-navbar' : 'navbar'}>
-                   <div className="navbar-header">Admin Page</div>
-                   <div className="trademarks-admin">{this.props.hero.trademarks}</div>
-                   <div className="ul-list-item">
-                       <div className="list-item">
-                           <div className={this.state.dashboard_active ? 'list-item-div active-panel' : 'list-item-div'} onClick={this.toggleDashboard}>Dashboard</div>
+                </div>
+                <FontAwesomeIcon className={this.state.hide_navbar_active ? 'hide-navbar click-hide-navbar' : "hide-navbar"} size="2x" icon={faBars} onClick={this.toggleNavbar} />
+                <div className={this.state.hide_navbar_active ? 'navbar show-only-navbar' : 'navbar'}>
+                    <div className="navbar-header">Admin Page</div>
+                    <div className="trademarks-admin">{this.props.hero.trademarks}</div>
+                    <div className="ul-list-item">
+                        <div className="list-item">
+                            <div className={this.state.dashboard_active ? 'list-item-div active-panel' : 'list-item-div'} onClick={this.toggleDashboard}>Dashboard</div>
                         </div>
                         <div className="list-item">
-                           <div className={this.state.admin_stuff_active ? 'list-item-div active-panel' : 'list-item-div'} onClick={this.toggleClassShowFeat}>
-                               Admin Stuff
+                            <div className={this.state.admin_stuff_active ? 'list-item-div active-panel' : 'list-item-div'} onClick={this.toggleClassShowFeat}>
+                                Admin Stuff
                                 <FontAwesomeIcon className="caret-down first" size="2x" icon={faCaretDown} />
                             </div>
                             <div className="ul-list-item-inside feat-show">
-                               <div className="list-item-inside">
+                                <div className="list-item-inside">
                                     <div onClick={this.togglePostsActive} className="list-item-div-inside">Posts</div>
                                 </div>
                                 <div className="list-item-inside">
@@ -212,16 +351,39 @@ class Admin extends React.Component {
                 </div>
                 <div className="now-component">
                     {
+                        this.state.email_to_view !== -1 &&
+                        <EmailToView emailId={this.state.email_to_view}/>
+                    }
+                    {
+                        this.state.post_to_edit !== -1 &&
+                        <AdminEditOnCancel postId={this.state.post_to_edit}/>
+                    }
+                    {
+                        this.state.portfolio_to_edit !== -1 &&
+                        <PortfolioToEdit portfolioId={this.state.portfolio_to_edit}/>
+                    }
+                    {
                         this.state.dashboard_active && <div className="admin-quote">{this.state.quote}</div>
                     }
                     {
-                        this.state.posts_active && <div className="posts-admin">{this.getPostsHTML(this.state.posts)}</div>
+                        this.state.posts_active &&
+                        <div>
+                            {this.getPostsHTML(this.props.posts)}
+                            <button className="add-post">Add Post!</button>
+                        </div>
                     }
                     {
-                        this.state.portfolio_active && <div className="portfolio-admin">{this.getPostsHTML(this.state.posts)}</div>
+                        this.state.portfolio_active &&
+                        <div>
+                            {this.getPortfolioHTML(this.props.portfolio)}
+                            <button className="add-portfolio">Add Portfolio!</button>
+                        </div>
                     }
                     {
-                        this.state.email_active && <div className="email-admin">{this.getPostsHTML(this.state.posts)}</div>
+                        this.state.email_active &&
+                        <div>
+                            {this.getEmailHTML(this.props.email)}
+                        </div>
                     }
                 </div>
             </div>
@@ -233,14 +395,21 @@ const mapStateToProps = state => {
     return {
         hero: state.heroReducer.hero,
         loaded: state.heroReducer.hero.loaded,
+        posts: state.adminReducer.posts,
+        portfolio: state.adminReducer.portfolio,
+        email: state.adminReducer.email,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getHeroDispatch: () => dispatch(getHeroRequest()),
+        getHeroRequest: () => dispatch(getHeroRequest()),
+        blacklistTokenRequest: () => dispatch(blacklistTokenRequest()),
+        getPostsAdminRequest: () => dispatch(getPostsAdminRequest()),
+        getPortfolioAdminRequest: () => dispatch(getPortfolioAdminRequest()),
+        getEmailAdminRequest: () => dispatch(getEmailAdminRequest()),
         dispatch
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Admin));

@@ -191,3 +191,105 @@
     font-size: 20px;
     font-weight: 900;
 }
+
+.posts-admin {
+    width: 300px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border: 3px solid black;
+    text-align: center;
+}
+
+.posts-id {
+    display: inline;
+    margin-right: 10px;
+}
+
+.posts-title {
+    margin-bottom: 10px;
+}
+
+.posts-image {
+    width: 50px;
+    height: 50px;
+}
+
+// .posts_date {
+// }
+
+// .posts-likes {
+// }
+
+// .posts-date-likes {
+// }
+
+.delete-admin {
+    margin-top: 2px;
+}
+
+.add-post {
+    width: 100px;
+    height: 50px;
+    position: relative;
+    left: calc(50% - 50px);
+    top: 50%;
+}
+
+.portfolio-admin {
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px solid black;
+    width: 250px;
+    height: 200px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.portfolio-image {
+    width: 150px;
+    height: 150px;
+}
+
+.portfolio-id {
+    display: inline;
+    margin-right: 5px;
+}
+
+.add-portfolio {
+    width: 100px;
+    height: 50px;
+    position: relative;
+    left: calc(50% - 50px);
+    top: 50%;
+}
+
+.email-admin {
+    width: 250px;
+    height: 150px;
+    border: 3px solid black;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.from-email {
+    font-size: 20px;
+}
+
+.from-name {
+    font-size: 18px;
+}
+
+.email-subject {
+    font-size: 20px;
+}
+
+.email-datesend {
+    font-size: 15px;
+}

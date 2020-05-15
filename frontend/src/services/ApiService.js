@@ -6,7 +6,7 @@ const TIMEOUT = 5000;
 const HEADERS = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+  'Authorization': 'JWT ' + sessionStorage.getItem('access_token'),
 };
 
 class ApiService {
@@ -32,18 +32,17 @@ class ApiService {
   handleError(error) {
     const originalRequest = error.config;
 
-    // Prevent infinite loops
-    if (error.response.status === 401 && originalRequest.url === API_ROOT+'token/refresh/') {
+    if (error.response.data.code === "token_not_valid" && error.response.status === 401 && error.response.statusText === "Unauthorized") {
+      const refreshToken = sessionStorage.getItem('refresh_token');
+
+      let bareRefreshToken;
+      if ( refreshToken ) {
+        bareRefreshToken = refreshToken.replace("JWT ", '');
+      } else {
         window.location.href = '/admin-login/';
         return Promise.reject(error);
-    }
-
-    if (error.response.data.code === "token_not_valid" && error.response.status === 401 && error.response.statusText === "Unauthorized") {
-      const refreshToken = localStorage.getItem('refresh_token');
-
-      const bareRefreshToken = refreshToken.replace("JWT ", '');
-
-      if (bareRefreshToken !== 'undefined'){
+      }
+      if (bareRefreshToken !== 'undefined' && bareRefreshToken !== null){
         const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
 
         // exp date in token is expressed in seconds, while now() returns milliseconds:
@@ -54,8 +53,8 @@ class ApiService {
           return this.client.post('/token/refresh/', {refresh: refreshToken})
                   .then((response) => {
         
-                    localStorage.setItem('access_token', response.data.access);
-                    localStorage.setItem('refresh_token', response.data.refresh);
+                    sessionStorage.setItem('access_token', response.data.access);
+                    sessionStorage.setItem('refresh_token', response.data.refresh);
         
                     this.client.defaults.headers['Authorization'] = "JWT " + response.data.access;
                     originalRequest.headers['Authorization'] = "JWT " + response.data.access;
@@ -74,7 +73,7 @@ class ApiService {
         window.location.href = '/admin-login/';
       }
     }
-  
+    
     // specific error handling done elsewhere
     return Promise.reject(error);
   }

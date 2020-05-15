@@ -6,7 +6,7 @@ from portfolio.api.views import (
     PostRetrieveView, EmailListView, ObtainTokenPairWithColorView,
     CustomUserCreate, LogoutAndBlacklistRefreshTokenForUserView,
     PortfolioListView, PostListViewAdmin, PortfolioListViewAdmin,
-    EmailListViewAdmin
+    EmailListViewAdmin, DummyView
 )
 
 
@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin_email/', EmailListViewAdmin.as_view()),
     path('admin_post/', PostListViewAdmin.as_view()),
     path('admin_portfolio/', PortfolioListViewAdmin.as_view()),
+    path('admin_dummy/', DummyView.as_view()),
 ]

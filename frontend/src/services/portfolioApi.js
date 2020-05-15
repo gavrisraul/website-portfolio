@@ -14,10 +14,19 @@ portfolioApi.getPortfolio = () => client.get('/portfolio/');
 portfolioApi.getSendEmail = () => client.get('/send_email/')
 portfolioApi.postSendEmail = (payload) => client.post('/send_email/', payload);
 portfolioApi.getClientIp = () => client.get('https://jsonip.com');
+
 portfolioApi.postToken = (payload) => client.post('/token/obtain/', payload);
+portfolioApi.postBlackList = (payload) => client.post('/blacklist/', payload);
 
 portfolioApi.getPostsAdmin = () => client.get('/admin_post/');
+portfolioApi.postPostsAdmin = (payload) => client.post('/admin_post/', payload);
+
 portfolioApi.getEmailAdmin = () => client.get('/admin_email/');
+portfolioApi.postEmailAdmin = (payload) => client.post('/admin_email/', payload);
+
 portfolioApi.getPortfolioAdmin = () => client.get('/admin_portfolio/');
+portfolioApi.postPortfolioAdmin = (payload) => client.post('/admin_portfolio/', payload);
+
+portfolioApi.getCredentials = () => client.get('/admin_dummy/');
 
 export default portfolioApi;

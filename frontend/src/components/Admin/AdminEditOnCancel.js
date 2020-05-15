@@ -79,7 +79,7 @@ class AdminEditOnCancel extends React.Component {
                 <FontAwesomeIcon className="post-change-icon dislike" onClick={this.changeEditMode} size="3x" icon={faThumbsDown} />
             </div>
             :
-            <div onDoubleClick={this.changeEditMode}>
+            <div onClick={this.changeEditMode}>
                 <ReactMarkdown
                 className="blog-post"
                 source={this.state.value}

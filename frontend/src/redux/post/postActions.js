@@ -63,10 +63,10 @@ export const postPostRequest = (id, likes) => {
         dispatch(postPost())
         portfolioApi.postPost(String(id), {likes})
             .then(response => {
-                if ( response.status === '200' ) {
+                if ( response.status === 200 ) {
                     const postLike  = { likes: likes, alreadyLiked: 'Thanks!' }
                     dispatch(postPostSuccess(postLike))
-                } else if ( response.status === '210' ) {
+                } else if ( response.status === 210 ) {
                     const postLike = { likes: likes, alreadyLiked: 'You already liked!' }
                     dispatch(postPostSuccess(postLike))
                 }

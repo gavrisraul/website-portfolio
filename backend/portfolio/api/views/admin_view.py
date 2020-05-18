@@ -91,6 +91,8 @@ class PostListViewAdmin(ListCreateAPIView):
             post_id_to_be_updated = request.data['post_id']
             post_new_title = request.data.get('title', None)
             post_new_text = request.data.get('text', None)
+            my_bytes = post_new_text.encode('utf-8')
+            post_new_text = my_bytes.decode("unicode_escape")
             post_new_image = request.data.get('image', None)
             post_new_date = request.data.get('date', None)
             post_new_likes = request.data.get('likes', None)
@@ -98,8 +100,15 @@ class PostListViewAdmin(ListCreateAPIView):
                 sql = f"UPDATE website.post SET title='{post_new_title}' where id='{post_id_to_be_updated}'"
                 cursor.execute(sql)
             if post_new_text:
-                sql = f"UPDATE website.post SET text='{post_new_text}' where id='{post_id_to_be_updated}'"
-                cursor.execute(sql)
+                my_bytes = post_new_text.encode('utf-8')
+                post_new_text = my_bytes.decode("unicode_escape")
+                post_new_text = post_new_text.replace('"', '', 1)
+                post_new_text = self.rreplace(post_new_text, '"', '', 1)
+                with open(f"Post{post_id_to_be_updated}.md", "a") as myfile:
+                    myfile.write(post_new_text)
+                sql = """UPDATE website.post SET text=%s where id=%s"""
+                update_tuple = (post_new_text, post_id_to_be_updated)
+                cursor.execute(sql, update_tuple)
             if post_new_image:
                 sql = f"UPDATE website.post SET image='{post_new_image}' where id='{post_id_to_be_updated}'"
                 cursor.execute(sql)
@@ -113,16 +122,19 @@ class PostListViewAdmin(ListCreateAPIView):
             return Response(status=200, data={'success': 1, 'post_id_updated': post_id_to_be_updated})
         elif operation == 'add':
             cursor = connection.cursor()
-            # import pudb; pu.db
             post_id_to_be_added = request.data['post_id']
             post_new_title = request.data['title']
             post_new_text = request.data['text']
+            my_bytes = post_new_text.encode('utf-8')
+            post_new_text = my_bytes.decode("unicode_escape")
             post_new_text = post_new_text.replace('"', '', 1)
             post_new_text = self.rreplace(post_new_text, '"', '', 1)
+            with open(f"Post{post_id_to_be_added}.md", "a") as myfile:
+                myfile.write(post_new_text)
             post_new_image = request.data['image']
             post_new_date = request.data['date']
             post_new_likes = request.data['likes']
-            sql = """INSERT INTO website.post VALUES (%s, %s, %s, %s, %s, %s)"""
+            sql = """INSERT INTO website.post (id, title, text, image, date, likes) VALUES (%s, %s, %s, %s, %s, %s)"""
             insert_tuple = (post_id_to_be_added, post_new_title, post_new_text, post_new_image, post_new_date, post_new_likes)
             cursor.execute(sql, insert_tuple)
             

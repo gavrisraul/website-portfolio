@@ -17,7 +17,7 @@ urlpatterns = [
     path('links/', LinksListView.as_view()),
     path('send_email/', EmailListView.as_view()),
     path('portfolio/', PortfolioListView.as_view()),
-    path('user/create/', CustomUserCreate.as_view(), name="create_user"),
+    # path('user/create/', CustomUserCreate.as_view(), name="create_user"),
     path('token/obtain/', ObtainTokenPairWithColorView.as_view(), name='token_obtain'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('blacklist/', LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='blacklist'),

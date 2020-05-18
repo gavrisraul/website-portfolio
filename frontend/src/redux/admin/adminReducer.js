@@ -57,6 +57,48 @@ const adminReducer = (state = initialState, action) => {
             email: [],
             error: action.payload,
         };
+        case POST_POSTS_ADMIN: return {
+            ...state,
+            postposts: { success: 1 },
+        };
+        case POST_POSTS_SUCCESS_ADMIN: return {
+            ...state,
+            postposts: action.payload,
+            error: '',
+        };
+        case POST_POSTS_FAILURE_ADMIN: return {
+            ...state,
+            postposts: [],
+            error: action.payload,
+        };
+        case POST_PORTFOLIO_ADMIN: return {
+            ...state,
+            postportfolio: { success: 1 },
+        };
+        case POST_PORTFOLIO_SUCCESS_ADMIN: return {
+            ...state,
+            postportfolio: action.payload,
+            error: '',
+        };
+        case POST_PORTFOLIO_FAILURE_ADMIN: return {
+            ...state,
+            postportfolio: [],
+            error: action.payload,
+        };
+        case POST_EMAIL_ADMIN: return {
+            ...state,
+            postemail: { success: 1 },
+        };
+        case POST_EMAIL_SUCCESS_ADMIN: return {
+            ...state,
+            postemail: action.payload,
+            error: '',
+        };
+        case POST_EMAIL_FAILURE_ADMIN: return {
+            ...state,
+            postemail: [],
+            error: action.payload,
+        };
         default: return state;
 
     }

@@ -10,7 +10,11 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 
 import $ from "jquery";
 
-import { getHeroRequest, blacklistTokenRequest, getPostsAdminRequest, getPortfolioAdminRequest, getEmailAdminRequest } from '../../redux';
+import {
+    getHeroRequest, blacklistTokenRequest,
+    getPostsAdminRequest, getPortfolioAdminRequest, getEmailAdminRequest,
+    postPortfolioAdminDeleteRequest, postEmailAdminDeleteRequest, postPostsAdminDeleteRequest,
+} from '../../redux';
 
 import styles from '../../styles/variables.scss';
 
@@ -59,12 +63,16 @@ class Admin extends React.Component {
         this.getPostToEdit = this.getPostToEdit.bind(this);
         this.getPortfolioToEdit = this.getPortfolioToEdit.bind(this);
         this.getEmailToView = this.getEmailToView.bind(this);
+
+        this.deletePost = this.deletePost.bind(this);
+        this.deletePortfolio = this.deletePortfolio.bind(this);
+        this.deleteEmail = this.deleteEmail.bind(this);
     }
 
     getPostsHTML(rawPosts) {
         this.postsHTML = rawPosts.map(element =>
             <div className="posts-admin">
-                <img id={element.id} onClick={this.getPostToEdit} className="posts-image" src={element.image} />
+                <img alt={element.id} id={element.id} onClick={this.getPostToEdit} className="posts-image" src={element.image} />
                 <div className="posts-title">
                     <div className="posts-id">{element.id}.</div>
                     <Link to={`/post/${element.id}`}>
@@ -86,7 +94,7 @@ class Admin extends React.Component {
     getPortfolioHTML(rawPortfolio) {
         this.portfolioHTML = rawPortfolio.map(element =>
             <div className="portfolio-admin">
-                <img id={element.id} onClick={this.getPortfolioToEdit} className="portfolio-image" src={element.portfolio_image} />
+                <img alt={element.id} id={element.id} onClick={this.getPortfolioToEdit} className="portfolio-image" src={element.portfolio_image} />
                 <div className="portfolio-name">
                     <div className="portfolio-id">{element.id}.</div>
                     {element.name}
@@ -152,38 +160,18 @@ class Admin extends React.Component {
     }
 
     deleteEmail(element) {
-        portfolioApi.postEmailAdmin({
-            username: sessionStorage.getItem('username'),
-            password: sessionStorage.getItem('password'),
-            email_id: element.target.id,
-        })
-        .then(response => {
-            return response.data;
-        })
+        this.props.email.splice(parseInt(element.target.id) - 1, 1);
+        this.props.dispatch(postEmailAdminDeleteRequest(element.target.id, 'delete'));
     }
 
     deletePost(element) {
-        portfolioApi.postPostsAdmin({
-            username: sessionStorage.getItem('username'),
-            password: sessionStorage.getItem('password'),
-            post_id: element.target.id,
-            operation: 'delete',
-        })
-        .then(response => {
-            return response.data;
-        })
+        this.props.posts.splice(parseInt(element.target.id) - 1, 1);
+        this.props.dispatch(postPostsAdminDeleteRequest(element.target.id, 'delete'));
     }
 
     deletePortfolio(element) {
-        portfolioApi.postPortfolioAdmin({
-            username: sessionStorage.getItem('username'),
-            password: sessionStorage.getItem('password'),
-            portfolio_id: element.target.id,
-            operation: 'delete',
-        })
-        .then(response => {
-            return response.data;
-        })
+        this.props.portfolio.splice(parseInt(element.target.id) - 1, 1);
+        this.props.dispatch(postPortfolioAdminDeleteRequest(element.target.id, 'delete'));
     }
 
     componentDidMount() {
@@ -356,14 +344,14 @@ class Admin extends React.Component {
                         this.state.posts_active &&
                         <div>
                             {this.getPostsHTML(this.props.posts)}
-                            <button className="add-post">Add Post!</button>
+                            <button onClick={() => {this.setState({post_to_edit: 0})}} className="add-post">Add Post!</button>
                         </div>
                     }
                     {
                         this.state.portfolio_active &&
                         <div>
                             {this.getPortfolioHTML(this.props.portfolio)}
-                            <button className="add-portfolio">Add Portfolio!</button>
+                            <button onClick={() => {this.setState({portfolio_to_edit: 0})}} className="add-portfolio">Add Portfolio!</button>
                         </div>
                     }
                     {
@@ -395,6 +383,9 @@ const mapDispatchToProps = dispatch => {
         getPostsAdminRequest: () => dispatch(getPostsAdminRequest()),
         getPortfolioAdminRequest: () => dispatch(getPortfolioAdminRequest()),
         getEmailAdminRequest: () => dispatch(getEmailAdminRequest()),
+        postEmailAdminDeleteRequest: () => dispatch(postEmailAdminDeleteRequest()),
+        postPortfolioAdminDeleteRequest: () => dispatch(postPortfolioAdminDeleteRequest()),
+        postPostsAdminDeleteRequest: () => dispatch(postPostsAdminDeleteRequest()),
         dispatch
     };
 };

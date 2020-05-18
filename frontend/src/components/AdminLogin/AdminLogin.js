@@ -13,8 +13,6 @@ import styles from '../../styles/variables.scss';
 
 import './AdminLogin.scss';
 
-import portfolioApi from '../../services/portfolioApi';
-
 
 class AdminLogin extends React.Component {
     constructor(props) {

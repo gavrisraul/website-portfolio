@@ -12,3 +12,7 @@ export { blacklistToken, blacklistTokenSuccess, blacklistTokenFailure, blacklist
 export { getPostsAdmin, getPostsAdminSuccess, getPostsAdminFailure, getPostsAdminRequest } from './admin/adminActions';
 export { getPortfolioAdmin, getPortfolioAdminSuccess, getPortfolioAdminFailure, getPortfolioAdminRequest } from './admin/adminActions';
 export { getEmailAdmin, getEmailAdminSuccess, getEmailAdminFailure, getEmailAdminRequest } from './admin/adminActions';
+
+export { postPostsAdmin, postPostsAdminSuccess, postPostsAdminFailure, postPostsAdminDeleteRequest, postPostsAdminUpdateRequest, postPostsAdminAddRequest } from './admin/adminActions';
+export { postPortfolioAdmin, postPortfolioAdminSuccess, postPortfolioAdminFailure, postPortfolioAdminDeleteRequest, postPortfolioAdminUpdateRequest, postPortfolioAdminAddRequest } from './admin/adminActions';
+export { postEmailAdmin, postEmailAdminSuccess, postEmailAdminFailure, postEmailAdminDeleteRequest } from './admin/adminActions';
